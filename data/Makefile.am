@@ -1,0 +1,3 @@
+pkgdata_DATA = 3var_13lag_half_data.txti \
+sbvar/3var_13lag_restriction.txt \
+tvsbvar/restriction_hyper_3var_13lag.txt tvsbvar/restriction_rp_3var_13lag_v2stoch.txt tvsbvar/restriction_tvsbvar_3var_13lag_v2stoch.txt tvsbvar/restriction_rp_3var_13lag_v2stoch_c2stoch.txt tvsbvar/restriction_tvsbvar_3var_13lag_v2stoch_c2stoch.txt
