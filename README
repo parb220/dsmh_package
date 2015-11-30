@@ -5,5 +5,6 @@ c. LAPACK (Linear Algebra PACKage), http://www.netlib.org/lapack/
 d. MPICH, https://www.mpich.org/
 
 2. Installation
-a. Run configure [--prefix path-where-dsmh-package-will-be-installed]
-b. Run make, and a bin directory will be generated in the directory where the dsmh package is installed. 
+a. Run 'configure [--prefix path-where-dsmh-package-will-be-installed]'
+b. Run 'make,' and the 'bin' and 'share' directory will be generated in the directory where the dsmh package is installed. The bin directory contains the executable codes of the examples. And the share directory contains the data that the examples will use. 
+c. Run 'make clean' for clean-up.

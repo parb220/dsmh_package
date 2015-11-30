@@ -6,6 +6,7 @@ AC_CONFIG_MACRO_DIRS([m4])
 
 # check if the source folder is available
 AC_CONFIG_SRCDIR([src/dsmh_basic/CEquiEnergyModel.cpp])
+AC_CONFIG_FILES([data/Makefile])
 
 # check for C++ preprocessor and compiler
 #AC_PROG_CXXCPP

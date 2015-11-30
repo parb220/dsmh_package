@@ -2093,6 +2093,8 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 # check if the source folder is available
 
+ac_config_files="$ac_config_files data/Makefile"
+
 
 # check for C++ preprocessor and compiler
 #AC_PROG_CXXCPP
@@ -5356,6 +5358,7 @@ cat >>$CONFIG_STATUS <<\_ACEOF || ac_write_fail=1
 for ac_config_target in $ac_config_targets
 do
   case $ac_config_target in
+    "data/Makefile") CONFIG_FILES="$CONFIG_FILES data/Makefile" ;;
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;

@@ -263,14 +263,14 @@ am__leading_dot = .
 am__quote = 
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
-bindir = ${exec_prefix}/bin
+bindir = $(prefix)/dsmh
 build = x86_64-unknown-linux-gnu
 build_alias = 
 build_cpu = x86_64
 build_os = linux-gnu
 build_vendor = unknown
 builddir = .
-datadir = ${datarootdir}
+datadir = $(prefix)/dsmh/data
 datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
@@ -303,8 +303,8 @@ target_alias =
 top_build_prefix = 
 top_builddir = .
 top_srcdir = .
-SUBDIRS = src
-EXTRA_DIST = data src/include
+SUBDIRS = src data 
+EXTRA_DIST = src/include
 all: all-recursive
 
 .SUFFIXES:

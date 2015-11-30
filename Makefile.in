@@ -263,14 +263,14 @@ am__leading_dot = @am__leading_dot@
 am__quote = @am__quote@
 am__tar = @am__tar@
 am__untar = @am__untar@
-bindir = @bindir@
+bindir = $(prefix)/@PACKAGE@
 build = @build@
 build_alias = @build_alias@
 build_cpu = @build_cpu@
 build_os = @build_os@
 build_vendor = @build_vendor@
 builddir = @builddir@
-datadir = @datadir@
+datadir = $(prefix)/@PACKAGE@/data
 datarootdir = @datarootdir@
 docdir = @docdir@
 dvidir = @dvidir@
@@ -303,8 +303,8 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-SUBDIRS = src
-EXTRA_DIST = data src/include
+SUBDIRS = src data 
+EXTRA_DIST = src/include
 all: all-recursive
 
 .SUFFIXES:
