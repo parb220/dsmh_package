@@ -80,4 +80,7 @@ std::istream& operator>>(std::istream &input, StringMatrix &string_matrix);
 
 void SetFilePosition(std::istream &in, const std::string &id);
 
+double _stod(const std::string &str, size_t *idx=0); 
+int _stoi(const std::string &str, size_t *idx=0); 
+std::string cluster_to_string(int i);
 #endif

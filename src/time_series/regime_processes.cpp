@@ -7,11 +7,6 @@
 #include "dw_ascii.hpp"
 #include "regime_processes.hpp"
 
-// Because stod ind stoi are the features introducted in the newer C++ standard (2011)
-// Some older versions of C++ complier does not support them
-// So we write _stod and _stoid to implement stod and stoi respectively
-
-
 //===============================================================================
 // class TRegimeProcessArray
 //===============================================================================
@@ -48,27 +43,6 @@ TRegimeProcessArray& TRegimeProcessArray::operator=(const std::vector<TRegimePro
 //===============================================================================
 // class TRegimeProcess
 //===============================================================================
-std::string cluster_to_string(int i);
-
-double _stod(const std::string &str, size_t *idx=0)
-{
-	char* pEnd; 
-	double value=strtod(str.c_str(), &pEnd); 
-	if (idx != NULL)
-		*idx = (size_t)(pEnd-str.c_str()); 
-	return value; 
-}
-
-int _stoi(const std::string &str, size_t *idx=0)
-{
-	char * pEnd; 
-	int value = strtol(str.c_str(), &pEnd, 0); 
-	if (idx != NULL)
-		*idx = (size_t)(pEnd-str.c_str()); 
-	return value; 	
-}
-
-
 std::string RegimeProcessName(int id)
 {
   switch(id)

@@ -17,26 +17,21 @@ regime_processes.o: time_series/regime_processes.cpp \
  /usr/lib/gcc/x86_64-redhat-linux/4.8.3/include/stddef.h \
  /usr/include/xlocale.h /usr/include/c++/4.8.3/exception \
  /usr/include/c++/4.8.3/bits/atomic_lockfree_defines.h \
- /usr/include/c++/4.8.3/bits/exception_ptr.h \
- /usr/include/c++/4.8.3/bits/exception_defines.h \
- /usr/include/c++/4.8.3/bits/nested_exception.h \
  /usr/include/c++/4.8.3/bits/char_traits.h \
  /usr/include/c++/4.8.3/bits/stl_algobase.h \
  /usr/include/c++/4.8.3/bits/functexcept.h \
+ /usr/include/c++/4.8.3/bits/exception_defines.h \
  /usr/include/c++/4.8.3/bits/cpp_type_traits.h \
  /usr/include/c++/4.8.3/ext/type_traits.h \
  /usr/include/c++/4.8.3/ext/numeric_traits.h \
  /usr/include/c++/4.8.3/bits/stl_pair.h \
  /usr/include/c++/4.8.3/bits/move.h \
  /usr/include/c++/4.8.3/bits/concept_check.h \
- /usr/include/c++/4.8.3/type_traits \
  /usr/include/c++/4.8.3/bits/stl_iterator_base_types.h \
  /usr/include/c++/4.8.3/bits/stl_iterator_base_funcs.h \
  /usr/include/c++/4.8.3/debug/debug.h \
  /usr/include/c++/4.8.3/bits/stl_iterator.h \
- /usr/include/c++/4.8.3/cstdint \
- /usr/lib/gcc/x86_64-redhat-linux/4.8.3/include/stdint.h \
- /usr/include/stdint.h /usr/include/c++/4.8.3/bits/localefwd.h \
+ /usr/include/c++/4.8.3/bits/localefwd.h \
  /usr/include/c++/4.8.3/x86_64-redhat-linux/bits/c++locale.h \
  /usr/include/c++/4.8.3/clocale /usr/include/locale.h \
  /usr/include/bits/locale.h /usr/include/c++/4.8.3/cctype \
@@ -62,23 +57,6 @@ regime_processes.o: time_series/regime_processes.cpp \
  /usr/include/c++/4.8.3/backward/binders.h \
  /usr/include/c++/4.8.3/bits/range_access.h \
  /usr/include/c++/4.8.3/bits/basic_string.h \
- /usr/include/c++/4.8.3/initializer_list \
- /usr/include/c++/4.8.3/ext/string_conversions.h \
- /usr/include/c++/4.8.3/cstdlib /usr/include/stdlib.h \
- /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
- /usr/include/sys/types.h /usr/include/sys/select.h \
- /usr/include/bits/select.h /usr/include/bits/sigset.h \
- /usr/include/sys/sysmacros.h /usr/include/alloca.h \
- /usr/include/bits/stdlib-bsearch.h /usr/include/bits/stdlib-float.h \
- /usr/include/c++/4.8.3/cstdio /usr/include/libio.h \
- /usr/include/_G_config.h /usr/include/bits/stdio_lim.h \
- /usr/include/bits/sys_errlist.h /usr/include/bits/stdio.h \
- /usr/include/c++/4.8.3/cerrno /usr/include/errno.h \
- /usr/include/bits/errno.h /usr/include/linux/errno.h \
- /usr/include/asm/errno.h /usr/include/asm-generic/errno.h \
- /usr/include/asm-generic/errno-base.h \
- /usr/include/c++/4.8.3/bits/functional_hash.h \
- /usr/include/c++/4.8.3/bits/hash_bytes.h \
  /usr/include/c++/4.8.3/bits/basic_string.tcc \
  /usr/include/c++/4.8.3/bits/locale_classes.tcc \
  /usr/include/c++/4.8.3/streambuf \
@@ -93,7 +71,10 @@ regime_processes.o: time_series/regime_processes.cpp \
  /usr/include/c++/4.8.3/bits/basic_ios.tcc /usr/include/c++/4.8.3/ostream \
  /usr/include/c++/4.8.3/bits/ostream.tcc \
  /usr/include/c++/4.8.3/bits/istream.tcc \
- /usr/include/c++/4.8.3/bits/codecvt.h \
+ /usr/include/c++/4.8.3/bits/codecvt.h /usr/include/c++/4.8.3/cstdio \
+ /usr/include/libio.h /usr/include/_G_config.h \
+ /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+ /usr/include/bits/stdio.h \
  /usr/include/c++/4.8.3/x86_64-redhat-linux/bits/basic_file.h \
  /usr/include/c++/4.8.3/x86_64-redhat-linux/bits/c++io.h \
  /usr/include/c++/4.8.3/bits/fstream.tcc /usr/include/math.h \
@@ -105,13 +86,20 @@ regime_processes.o: time_series/regime_processes.cpp \
  /usr/lib/gcc/x86_64-redhat-linux/4.8.3/include/float.h \
  include/utilities_dw/dw_rand.h include/utilities_dw/prcsn.h \
  include/utilities_dw/dw_math.h /usr/local/include/gsl/gsl_rng.h \
- /usr/local/include/gsl/gsl_types.h /usr/local/include/gsl/gsl_errno.h \
+ /usr/include/stdlib.h /usr/include/bits/waitflags.h \
+ /usr/include/bits/waitstatus.h /usr/include/sys/types.h \
+ /usr/include/sys/select.h /usr/include/bits/select.h \
+ /usr/include/bits/sigset.h /usr/include/sys/sysmacros.h \
+ /usr/include/alloca.h /usr/include/bits/stdlib-bsearch.h \
+ /usr/include/bits/stdlib-float.h /usr/local/include/gsl/gsl_types.h \
+ /usr/local/include/gsl/gsl_errno.h /usr/include/errno.h \
+ /usr/include/bits/errno.h /usr/include/linux/errno.h \
+ /usr/include/asm/errno.h /usr/include/asm-generic/errno.h \
+ /usr/include/asm-generic/errno-base.h \
  /usr/local/include/gsl/gsl_inline.h include/utilities_dw/dw_ascii.hpp \
  /usr/include/c++/4.8.3/vector \
  /usr/include/c++/4.8.3/bits/stl_construct.h \
  /usr/include/c++/4.8.3/ext/alloc_traits.h \
- /usr/include/c++/4.8.3/bits/alloc_traits.h \
- /usr/include/c++/4.8.3/bits/ptr_traits.h \
  /usr/include/c++/4.8.3/bits/stl_uninitialized.h \
  /usr/include/c++/4.8.3/bits/stl_vector.h \
  /usr/include/c++/4.8.3/bits/stl_bvector.h \
@@ -174,17 +162,13 @@ regime_processes.o: time_series/regime_processes.cpp \
 
 /usr/include/c++/4.8.3/bits/atomic_lockfree_defines.h:
 
-/usr/include/c++/4.8.3/bits/exception_ptr.h:
-
-/usr/include/c++/4.8.3/bits/exception_defines.h:
-
-/usr/include/c++/4.8.3/bits/nested_exception.h:
-
 /usr/include/c++/4.8.3/bits/char_traits.h:
 
 /usr/include/c++/4.8.3/bits/stl_algobase.h:
 
 /usr/include/c++/4.8.3/bits/functexcept.h:
+
+/usr/include/c++/4.8.3/bits/exception_defines.h:
 
 /usr/include/c++/4.8.3/bits/cpp_type_traits.h:
 
@@ -198,8 +182,6 @@ regime_processes.o: time_series/regime_processes.cpp \
 
 /usr/include/c++/4.8.3/bits/concept_check.h:
 
-/usr/include/c++/4.8.3/type_traits:
-
 /usr/include/c++/4.8.3/bits/stl_iterator_base_types.h:
 
 /usr/include/c++/4.8.3/bits/stl_iterator_base_funcs.h:
@@ -207,12 +189,6 @@ regime_processes.o: time_series/regime_processes.cpp \
 /usr/include/c++/4.8.3/debug/debug.h:
 
 /usr/include/c++/4.8.3/bits/stl_iterator.h:
-
-/usr/include/c++/4.8.3/cstdint:
-
-/usr/lib/gcc/x86_64-redhat-linux/4.8.3/include/stdint.h:
-
-/usr/include/stdint.h:
 
 /usr/include/c++/4.8.3/bits/localefwd.h:
 
@@ -290,64 +266,6 @@ regime_processes.o: time_series/regime_processes.cpp \
 
 /usr/include/c++/4.8.3/bits/basic_string.h:
 
-/usr/include/c++/4.8.3/initializer_list:
-
-/usr/include/c++/4.8.3/ext/string_conversions.h:
-
-/usr/include/c++/4.8.3/cstdlib:
-
-/usr/include/stdlib.h:
-
-/usr/include/bits/waitflags.h:
-
-/usr/include/bits/waitstatus.h:
-
-/usr/include/sys/types.h:
-
-/usr/include/sys/select.h:
-
-/usr/include/bits/select.h:
-
-/usr/include/bits/sigset.h:
-
-/usr/include/sys/sysmacros.h:
-
-/usr/include/alloca.h:
-
-/usr/include/bits/stdlib-bsearch.h:
-
-/usr/include/bits/stdlib-float.h:
-
-/usr/include/c++/4.8.3/cstdio:
-
-/usr/include/libio.h:
-
-/usr/include/_G_config.h:
-
-/usr/include/bits/stdio_lim.h:
-
-/usr/include/bits/sys_errlist.h:
-
-/usr/include/bits/stdio.h:
-
-/usr/include/c++/4.8.3/cerrno:
-
-/usr/include/errno.h:
-
-/usr/include/bits/errno.h:
-
-/usr/include/linux/errno.h:
-
-/usr/include/asm/errno.h:
-
-/usr/include/asm-generic/errno.h:
-
-/usr/include/asm-generic/errno-base.h:
-
-/usr/include/c++/4.8.3/bits/functional_hash.h:
-
-/usr/include/c++/4.8.3/bits/hash_bytes.h:
-
 /usr/include/c++/4.8.3/bits/basic_string.tcc:
 
 /usr/include/c++/4.8.3/bits/locale_classes.tcc:
@@ -381,6 +299,18 @@ regime_processes.o: time_series/regime_processes.cpp \
 /usr/include/c++/4.8.3/bits/istream.tcc:
 
 /usr/include/c++/4.8.3/bits/codecvt.h:
+
+/usr/include/c++/4.8.3/cstdio:
+
+/usr/include/libio.h:
+
+/usr/include/_G_config.h:
+
+/usr/include/bits/stdio_lim.h:
+
+/usr/include/bits/sys_errlist.h:
+
+/usr/include/bits/stdio.h:
 
 /usr/include/c++/4.8.3/x86_64-redhat-linux/bits/basic_file.h:
 
@@ -418,9 +348,43 @@ include/utilities_dw/dw_math.h:
 
 /usr/local/include/gsl/gsl_rng.h:
 
+/usr/include/stdlib.h:
+
+/usr/include/bits/waitflags.h:
+
+/usr/include/bits/waitstatus.h:
+
+/usr/include/sys/types.h:
+
+/usr/include/sys/select.h:
+
+/usr/include/bits/select.h:
+
+/usr/include/bits/sigset.h:
+
+/usr/include/sys/sysmacros.h:
+
+/usr/include/alloca.h:
+
+/usr/include/bits/stdlib-bsearch.h:
+
+/usr/include/bits/stdlib-float.h:
+
 /usr/local/include/gsl/gsl_types.h:
 
 /usr/local/include/gsl/gsl_errno.h:
+
+/usr/include/errno.h:
+
+/usr/include/bits/errno.h:
+
+/usr/include/linux/errno.h:
+
+/usr/include/asm/errno.h:
+
+/usr/include/asm-generic/errno.h:
+
+/usr/include/asm-generic/errno-base.h:
 
 /usr/local/include/gsl/gsl_inline.h:
 
@@ -431,10 +395,6 @@ include/utilities_dw/dw_ascii.hpp:
 /usr/include/c++/4.8.3/bits/stl_construct.h:
 
 /usr/include/c++/4.8.3/ext/alloc_traits.h:
-
-/usr/include/c++/4.8.3/bits/alloc_traits.h:
-
-/usr/include/c++/4.8.3/bits/ptr_traits.h:
 
 /usr/include/c++/4.8.3/bits/stl_uninitialized.h:
 

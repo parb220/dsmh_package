@@ -1,0 +1,32 @@
+How to run 'test_sbvar_simulation' to draw samples from the structured Bayesian vector autoregression (sbvar) model using the dsmh sampler.
+
+1. The executable file 'test_sbvar_simulation' accepts the following command line options:
+
+a. Simulation related options:
+-F: directory to save samples, default is the current directory (where the exectuable file is)
+-R: to specify the id of the simulation run, default is the time of running
+-o: to turn on the pure Metropolis-Hasting, default is off
+-H: number of stages, default is 1
+-M: number of striations,  default is 1
+-T: lambda_1, default is 0.1
+-P: probability of equi-energy jump, default is 1/(10.0* thinning factor)
+-I: thinning factor, default is 50
+-N: number of draws per group, default is 200000
+-B: burning-in length, default is 0
+-G: number of groups, default is 1
+
+b. Diagnosis related:
+-j: to display the rate of equi-energy jump and the rate of MH jump, default is off
+-t: to display the number of transitions across striations, default is off
+-d: to display the distribution of the samples among striations, default is off
+-m: to calculate and display log(marginal data density) using the Mueller's method, default is off but to only calculate and display log(marginal data density) using the importance reweighting method.
+
+c. Model specific:
+-D: data file that must be provided, e.g., ../share/3var_13lag_half_data.txt
+-S: model restriction file that must be provided, e.g., ../share/sbvar/3var_13lag_restriction.txt
+
+2. Data file
+The data file is a text file containing the time series data that are used to estimate the parameters of the model. Each row corresponds to the observation at one time point. Each column corresponds to one dimension of the data; and in particular the first column corresponds to the time points.
+
+3. Model restriction file
+See ../share/sbvar/3var_13lag_restriction.txt for how the model restriction file should be formatted.  

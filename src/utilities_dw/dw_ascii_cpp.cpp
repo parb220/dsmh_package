@@ -18,6 +18,32 @@
 #include "dw_ascii.hpp"
 #include "dw_exception.hpp"
 
+double _stod(const std::string &str, size_t *idx)
+{
+        char* pEnd;
+        double value=strtod(str.c_str(), &pEnd);
+        if (idx != NULL)
+                *idx = (size_t)(pEnd-str.c_str());
+        return value;
+}
+
+int _stoi(const std::string &str, size_t *idx)
+{
+        char * pEnd;
+        int value = strtol(str.c_str(), &pEnd, 0);
+        if (idx != NULL)
+                *idx = (size_t)(pEnd-str.c_str());
+        return value;
+}
+
+std::string cluster_to_string(int i)
+{
+        std::stringstream convert;
+        convert.str(std::string());
+        convert << i;
+        return convert.str();
+}
+
 //===============================================================================
 //=== class StringVector
 //===============================================================================
@@ -182,7 +208,7 @@ TDenseMatrix StringMatrix::GetNumericMatrix(int pos, int n_rows, int n_cols) con
 
       for (int i=n_rows-1; i >= 0; i--)
 	for (int j=n_cols-1; j >= 0; j--)
-	  M(i,j)=stod((*this)[pos+i][j]);
+	  M(i,j)=_stod((*this)[pos+i][j]);
     }
   catch (std::exception)
     {
@@ -203,7 +229,7 @@ TDenseVector StringMatrix::GetNumericVector(int pos, int n_cols) const
   TDenseVector v(n_cols);
   try
     {
-      for (int j=n_cols-1; j >= 0; j--) v(j)=stod((*this)[pos][j]);
+      for (int j=n_cols-1; j >= 0; j--) v(j)=_stod((*this)[pos][j]);
     }
   catch (std::exception)
     {

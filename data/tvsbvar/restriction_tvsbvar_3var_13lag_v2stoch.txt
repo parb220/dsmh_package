@@ -1,3 +1,17 @@
+//** Lines starting with //== are line identifiers that are used to find specific
+//** fields and must not be modified.  The lines below a line identifier must be
+//** of the proper format.  Lines starting with //** are comments and can be
+//** inserted, deleted, or modified.
+
+//** X or x means a free parameter
+//** Real values mean the parameters can only take specified values
+
+//** Total number of regimes = Number of Base Regimes * Number of Multiplicative Regimes * Number of Addititve Regimes
+//** This function corresponds to the case with one base regime, two multiplicative regimes and one additive regime
+//** In the base regime, A0 is partially restricted, Aplus is free, and Xi is restricted
+//** In the 1st multiplicative
+
+
 //== NumberVariables
 3
 //== NumberLags
@@ -63,27 +77,13 @@ x 1 1
 0 0 0
 0 0 0
 
-//== Additive::A[1]
-0 0 0
-0 0 0
-0 0 0
 
 //== Additive::Aplus[0]
 0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0    0
 0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0    0
 0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0    0
 
-//== Additive::Aplus[1]
-0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   X 
-0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   X 
-0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   X
-
 //== Additive::Xi[0]
-0 0 0
-0 0 0
-0 0 0
-
-//== Additive::Xi[1]
 0 0 0
 0 0 0
 0 0 0

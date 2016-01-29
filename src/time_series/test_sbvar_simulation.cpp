@@ -8,6 +8,8 @@
 #include <vector>
 #include <iomanip>
 #include "dw_rand.h"
+#include "dw_ascii.h"
+#include "dw_ascii.hpp"
 #include "sbvar.hpp"
 #include "CEquiEnergy_TimeSeries.hpp"
 #include "CSampleIDWeight.hpp"
@@ -18,104 +20,106 @@
 #include "storage_constant.hpp"
 #include "TaskScheduling.hpp"
 #include "maximization_option.hpp"
+#include "option.hpp"
 
 using namespace std; 
-
-// bool WriteBlockScheme(const string &filename, const vector<TIndex> &blocks);
 
 int main(int argc, char **argv)
 {
 	static struct option long_options[] =
         {
-                {"data_file", required_argument, 0, 'd'},
-                {"restriction_file", required_argument, 0, 's'},
+                {"data_file", required_argument, 0, 'D'},
+                {"restriction_file", required_argument, 0, 'S'},
+		{"output directory", required_argument, 0, 'F'}, 
 		// Simulation options
-		{"RunID", required_argument, 0, 'r'},
-                {"Original", no_argument, 0, 'o'},
-                {"Number of stages", required_argument, 0, 'n'},
-		{"Number of striations", required_argument, 0, 'N'},
+		{"ID", required_argument, 0, 'R'},
+                {"Pure Metropolis-Hasting", no_argument, 0, 'o'},
+                {"Number of stages", required_argument, 0, 'H'},
+		{"Number of striations", required_argument, 0, 'M'},
                 {"Lambda_1", required_argument, 0, 'T'},
 		{"Pee", required_argument, 0, 'P'}, 
-                {"THIN", required_argument, 0, 'I'},
-                {"ndraws", required_argument, 0, 'w'},
-		{"burn-in length", required_argument, 0, 'W'}, 
-                {"nInitial", required_argument, 0, 'S'},
-                {"Highest Level", required_argument, 0, 'L'},
-                {"Lowest Level", required_argument, 0, 'l'},
+                {"Thinning factor", required_argument, 0, 'I'},
+                {"Number of draws per group", required_argument, 0, 'N'},
+		{"Burn-in length", required_argument, 0, 'B'}, 
+                {"Number of groups", required_argument, 0, 'G'},
 		// Diaoganistic options
-		{"Number of groups for NSE analysis", required_argument, 0, 'G'}, 
+		{"Display jump rate", no_argument, 0, 'j'}, 
+		{"Display transitions across striations", no_argument, 0, 't'},
+		{"Display distrition among striations", no_argument, 0, 'd'},
+		{"Use Mueller's method", no_argument, 0, 'm'}, 
 		{0, 0, 0, 0}
 	}; 
 
 	int option_index = 0;
-        size_t n_initial = 1;
-	bool if_original = false;
+        int nGroup = 1;
+	bool if_pure_MH = false;
 	
-	string data_file_name, restriction_file; 
 	CEESParameter sim_option;
+	sim_option.storage_dir = string("./"); // getenv("HOME")+string("/DW_TZ_GIT/projects_dw/work/sbvar/results/");
         sim_option.storage_marker = 10000;
-        sim_option.run_id = to_string(time(NULL));
-	sim_option.storage_dir = getenv("HOME")+string("/DW_TZ_GIT/projects_dw/work/sbvar/results/");
-	// sim_option.storage_dir = getenv("HOME")+string("/work/mdd/results/");
+        sim_option.run_id = cluster_to_string(time(NULL));
+	sim_option.number_energy_stage = sim_option.number_striation = 1; 
         sim_option.lambda_1 = 0.1;
         sim_option.THIN = 50;
         sim_option.pee = 1.0/(10.0*sim_option.THIN);
-        sim_option.simulation_length = 200000;
-	sim_option.number_energy_stage = sim_option.number_striation = 1; 
-	sim_option.highest_stage = sim_option.lowest_stage = -1; 
+	sim_option.burn_in_length = 0;        
+	sim_option.simulation_length = 200000;
 
-	// int block_scheme = 0; 
-
-	int nGroup_NSE = 1; 
+	Diagnosis diagnosis_option = OPT_ESS; 
+	string data_file_name, restriction_file; 
 
 	while (1)
         {
-                int c = getopt_long(argc, argv, "d:s:r:on:N:T:P:I:w:W:S:L:l:G:", long_options, &option_index);
+                int c = getopt_long(argc, argv, "D:S:F:R:oH:M:T:P:I:N:B:G:jtdm", long_options, &option_index);
                 if (c == -1)
                         break;
 		switch(c)
                 {
-                        case 'd':
+                        case 'D':
                                 data_file_name = string(optarg); break;
-			case 's':
+			case 'S':
                                 restriction_file = string(optarg); break;
-			case 'r':
+			case 'F':
+				sim_option.storage_dir = string(optarg); break; 
+			case 'R':
                                 sim_option.run_id = string(optarg); break;
                         case 'o':
-                                if_original = true; break; 
-                        case 'n':
+                                if_pure_MH = true; break; 
+                        case 'H':
 				sim_option.number_energy_stage = atoi(optarg); break; 
-			case 'N':
+			case 'M':
 				sim_option.number_striation = atoi(optarg); break; 
-			case 'T':
-                                sim_option.lambda_1 = atof(optarg); break;
 			case 'P':
 				sim_option.pee = atof(optarg); break; 
+			case 'T':
+                                sim_option.lambda_1 = atof(optarg); break;
                         case 'I':
                                 sim_option.THIN = atoi(optarg); break;
-                        case 'w':
+                        case 'N':
                                 sim_option.simulation_length = atoi(optarg); break;
-			case 'W': 
+			case 'B': 
 				sim_option.burn_in_length = atoi(optarg);  break; 
-                        case 'S':
-                                n_initial = atoi(optarg); break;
-                        case 'L':
-                                sim_option.highest_stage = atoi(optarg); break; 
-                        case 'l':
-                                sim_option.lowest_stage = atoi(optarg); break; 
-			case 'G': 
-				nGroup_NSE = atoi(optarg); break; 
+                        case 'G':
+                                nGroup= atoi(optarg); break;
+			case 'j':
+				diagnosis_option = static_cast<Diagnosis>(static_cast<int>(diagnosis_option) | static_cast<int>(OPT_JMP_RT)); break; 
+			case 't':
+				diagnosis_option = static_cast<Diagnosis>(static_cast<int>(diagnosis_option) | static_cast<int>(OPT_TRAN_STR)); break; 
+			case 'd':
+				diagnosis_option = static_cast<Diagnosis>(static_cast<int>(diagnosis_option) | static_cast<int>(OPT_DSTR_STR)); break; 
+			case 'm':
+				diagnosis_option = static_cast<Diagnosis>(static_cast<int>(diagnosis_option) | static_cast<int>(OPT_MLLR)); break; 
 			default: 
 				break; 
 		}
 	}		
 	if (data_file_name.empty() || restriction_file.empty()) 
 	{
-		cerr << "Usage: " << argv[0] << " -d data file -s restriction file.\n"; 
-		abort(); 
+		cerr << "Usage: " << argv[0] << " -D data file -S restriction file.\n"; 
+		exit(1); 
 	}	
 
-	if (if_original)
+	if (if_pure_MH)
         {
                 sim_option.number_energy_stage = 1;
                 sim_option.highest_stage = sim_option.lowest_stage = 0;
@@ -123,19 +127,11 @@ int main(int argc, char **argv)
         }
 	else 
 	{
-		if (sim_option.highest_stage < 0)
-			sim_option.highest_stage = sim_option.number_energy_stage-1; 
-		else 
-        		sim_option.highest_stage = sim_option.highest_stage < sim_option.number_energy_stage-1 ? sim_option.highest_stage : sim_option.number_energy_stage-1; 
-		if (sim_option.lowest_stage < 0)
-			sim_option.lowest_stage = 0; 
-		else 
-        		sim_option.lowest_stage = sim_option.lowest_stage > 0 ? sim_option.lowest_stage : 0; 
+		sim_option.highest_stage = sim_option.number_energy_stage-1; 
+		sim_option.lowest_stage = 0; 
 	}
-	// sim_option.SetTemperature_geometric(); // geometric 
-	// else
+	sim_option.simulation_length *= nGroup;
 	sim_option.SetTemperature_quadratic();  
-	// sim_option.SetTemperature_polynomial(3.15); 
 
       	//////////////////////////////////////////////////////
       	// restrictions file
@@ -144,7 +140,7 @@ int main(int argc, char **argv)
       	if (!input.is_open()) 
 	{
 		cerr << "Unable to open restrictions file" << restriction_file << endl; 
-		abort(); 
+		exit(1); 
 	}
       	vector<TDenseMatrix> U, V;
       	TDenseMatrix TrueA0, TrueAplus;
@@ -162,14 +158,20 @@ int main(int argc, char **argv)
 
       	///////////////////////////////////////////////////////
       	//Generate/read data
-      	int n_obs= 318-n_lags; // since 1988.01 
+      	int n_lines = dw_NumberLines((FILE *)NULL, (char*)data_file_name.c_str()); 
+      	int n_obs= n_lines-n_lags; // since 1988.01 
+	if (n_obs <= 0)
+	{
+		cout << "There are not sufficient data in " << data_file_name <<endl;
+                exit(1); 
+	}
       	TDenseMatrix rawdata;
 
 	input.open(data_file_name.c_str(), ifstream::in);
       	if (!input.is_open()) 
 	{
 		cout << "Unable to open data file" << data_file_name <<endl;
-		abort(); 
+		exit(1); 
 	}
       	rawdata.Resize(n_obs+n_lags,1+n_vars);
       	input >> rawdata;
@@ -190,14 +192,6 @@ int main(int argc, char **argv)
      	TDenseVector EstimatedParameters(sbvar.NumberParameters());
       	sbvar.GetParameters(EstimatedParameters.vector);
 
-	// blocking scheme
-	/*vector <TIndex>blocks = sbvar.ConstructBlocks(block_scheme); 
-	if (blocks.empty())
-	{
-		cerr << "block scheme can only be 0, 1 and 2.\n"; 
-		abort(); 
-	}*/
-
 	/////////////////////////////////////////////////////////////////////
 	// EquiEnergyModel
 	MPI_Init(&argc, &argv);
@@ -210,7 +204,7 @@ int main(int argc, char **argv)
 	CEquiEnergy_TimeSeries simulation_model;
         simulation_model.target_model = &sbvar;
         simulation_model.timer_when_started = -1;
-        if (if_original)
+        if (if_pure_MH)
                 simulation_model.if_bounded = false;
         simulation_model.metropolis = new CMetropolis(&simulation_model); 
         simulation_model.parameter = &sim_option;
@@ -238,7 +232,7 @@ int main(int argc, char **argv)
                 }
                 
 		// direct calculation of logMDD
-		if (sim_option.highest_stage == sim_option.number_energy_stage-1)
+		/*if (sim_option.highest_stage == sim_option.number_energy_stage-1)
 		{
 			for (int stage = sim_option.highest_stage; stage >= sim_option.lowest_stage; stage--)
 			{
@@ -246,11 +240,11 @@ int main(int argc, char **argv)
 				cout << "true logMDD at stage " << stage << setprecision(20) << ": " << sbvar.LogPosteriorIntegral() << endl; 
 			}
 			sbvar.SetTemperature(1.0,1.0); 
-		}
-		master_deploying(N_MESSAGE, nNode, n_initial, simulation_model, mode, nGroup_NSE); 
+		}*/
+		master_deploying(N_MESSAGE, nNode, nGroup, simulation_model, mode, diagnosis_option); 
         }
         else
-		 slave_computing(N_MESSAGE, simulation_model, mode); 
+		slave_computing(N_MESSAGE, simulation_model, mode); 
 
   	return 0;
 }

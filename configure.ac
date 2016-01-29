@@ -14,7 +14,7 @@ AC_PROG_CXX
 AC_PROG_CC
 
 # C++11 standard
-AX_CXX_COMPILE_STDCXX_11
+#AX_CXX_COMPILE_STDCXX_11
 
 # automake initialization (mandatory) including a check for automake API version >= 1.9
 AM_INIT_AUTOMAKE([1.9])

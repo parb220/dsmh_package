@@ -1,9 +1,9 @@
 #include "prcsn.h"
 #include "hyper_parameter.hpp"
+#include "dw_ascii.hpp"
 int ParseRestrictionMatrix(std::vector< std::vector<int> > &R, TDenseMatrix &C, const StringMatrix &M, int pos, int n_rows, int n_cols=-1);
 int FindIdentifier(const StringMatrix &M, const std::string &id);
 int ParseInteger(int &k, const StringMatrix &M, int pos);
-std::string cluster_to_string(int i);
 
 THyperParameter * THyperParameter::Clone() const
 {

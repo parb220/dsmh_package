@@ -1,5 +1,5 @@
-#ifndef EQUI_ENERGY_TIME_SERIES
-#define EQUI_ENERGY_TIME_SERIES
+#ifndef _EQUI_ENERGY_TIME_SERIES_
+#define _EQUI_ENERGY_TIME_SERIES__
 
 #include "CEquiEnergyModel.hpp"
 

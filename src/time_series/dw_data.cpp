@@ -4,14 +4,7 @@
 #include <cfloat>
 
 #include "dw_data.hpp"
-
-std::string cluster_to_string(int i)
-{
-        std::stringstream convert;
-        convert.str(std::string());
-        convert << i;
-        return convert.str();
-}
+#include "dw_ascii.hpp"
 
 //===============================================================================
 //=== class TData

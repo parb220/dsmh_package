@@ -6,7 +6,6 @@
 #include "tvsbvar.hpp"
 #include "dw_math.h"
 
-string cluster_to_string(int);
 int ParseRestrictionMatrix(std::vector< std::vector<int> > &R, TDenseMatrix &C, const StringMatrix &M, int pos, int n_rows, int n_cols=-1);
 int FindIdentifier(const StringMatrix &M, const std::string &id);
 int ParseInteger(int &k, const StringMatrix &M, int pos); 

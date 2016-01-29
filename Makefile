@@ -84,8 +84,6 @@ DIST_COMMON = INSTALL NEWS README AUTHORS ChangeLog \
 	config.guess config.sub depcomp install-sh missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/m4_ax_blas.m4 \
-	$(top_srcdir)/m4/m4_ax_cxx_compile_stdcxx.m4 \
-	$(top_srcdir)/m4/m4_ax_cxx_compile_stdcxx_11.m4 \
 	$(top_srcdir)/m4/m4_ax_lapack.m4 \
 	$(top_srcdir)/m4/m4_ax_prog_cxx_mpi.m4 \
 	$(top_srcdir)/configure.ac
@@ -211,7 +209,7 @@ CPPFLAGS =
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
-CXXFLAGS = -g -O2 -std=gnu++11
+CXXFLAGS = -g -O2
 CYGPATH_W = echo
 DEFS = -DPACKAGE_NAME=\"dsmh\" -DPACKAGE_TARNAME=\"dsmh\" -DPACKAGE_VERSION=\"1.0\" -DPACKAGE_STRING=\"dsmh\ 1.0\" -DPACKAGE_BUGREPORT=\"hongwei.wu@atl.frb.org\" -DPACKAGE_URL=\"\" -DPACKAGE=\"dsmh\" -DVERSION=\"1.0\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_MPI=1 -DHAVE_LIBM=1 -DHAVE_LIBGSLCBLAS=1 -DHAVE_LIBGSL=1 -DHAVE_BLAS=1
 DEPDIR = .deps
@@ -224,7 +222,6 @@ FC = gfortran
 FCFLAGS = -g -O2
 FCLIBS =  -L/usr/lib/gcc/x86_64-redhat-linux/4.8.3 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.3/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.3/../../.. -lgsl -lgslcblas -lgfortran -lm -lmpi -lquadmath
 GREP = /usr/bin/grep
-HAVE_CXX11 = 
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
@@ -292,7 +289,7 @@ mandir = ${datarootdir}/man
 mkdir_p = $(MKDIR_P)
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /home/hongweiwu/test_dsmh
+prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin

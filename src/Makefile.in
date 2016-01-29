@@ -85,8 +85,6 @@ DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/depcomp
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/m4_ax_blas.m4 \
-	$(top_srcdir)/m4/m4_ax_cxx_compile_stdcxx.m4 \
-	$(top_srcdir)/m4/m4_ax_cxx_compile_stdcxx_11.m4 \
 	$(top_srcdir)/m4/m4_ax_lapack.m4 \
 	$(top_srcdir)/m4/m4_ax_prog_cxx_mpi.m4 \
 	$(top_srcdir)/configure.ac
@@ -233,7 +231,6 @@ FC = @FC@
 FCFLAGS = @FCFLAGS@
 FCLIBS = @FCLIBS@
 GREP = @GREP@
-HAVE_CXX11 = @HAVE_CXX11@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@

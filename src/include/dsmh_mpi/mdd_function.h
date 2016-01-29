@@ -26,8 +26,12 @@ extern "C"
 #endif
 
 
+PRECISION ComputeLogMarginalDensity_WaggonerZha(TMatrix proposal, TMatrix posterior, PRECISION L1, PRECISION L2, int *in_proposal, int *in_posterior, PRECISION *I);
 PRECISION ComputeLogMarginalDensity_Mueller(TMatrix proposal, TMatrix posterior,int *in1, int *in2);
 PRECISION ComputeLogMarginalDensity_Bridge(TMatrix proposal, TMatrix posterior);
+
+void PosteriorDistributionInfo(FILE *f_in, int flag, TVector center, TMatrix scale, int ndraws);
+TVector PosteriorRadius(FILE *f_in, TVector center, TMatrix scale, int ndraws);
 
 TElliptical* CreateEllipticalFromPosterior_TruncatedGaussian(TVector R, int dim, TVector center, TMatrix scale, PRECISION p_lo, PRECISION p_hi);
 TElliptical* CreateEllipticalFromPosterior_Gaussian(TVector R, int dim, TVector center, TMatrix scale);
@@ -35,6 +39,8 @@ TElliptical* CreateEllipticalFromPosterior_TruncatedPower(TVector R, int dim, TV
 TElliptical* CreateEllipticalFromPosterior_Power(TVector R, int dim, TVector center, TMatrix scale, PRECISION p_hi);
 TElliptical* CreateEllipticalFromPosterior_Uniform(TVector R, int dim, TVector center, TMatrix scale, PRECISION p_lo, PRECISION p_hi);
 TElliptical* CreateEllipticalFromPosterior_Step(TVector R, int dim, TVector center, TMatrix scale, PRECISION p_lo, PRECISION p_hi);
+
+TMatrix CreatePosterior(FILE *f_in, TElliptical *elliptical, int ndraws);
 
   
 #ifdef __cplusplus
