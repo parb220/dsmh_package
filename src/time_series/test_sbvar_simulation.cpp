@@ -9,7 +9,6 @@
 #include <iomanip>
 #include "dw_rand.h"
 #include "dw_ascii.h"
-#include "dw_ascii.hpp"
 #include "sbvar.hpp"
 #include "CEquiEnergy_TimeSeries.hpp"
 #include "CSampleIDWeight.hpp"
@@ -143,15 +142,15 @@ int main(int argc, char **argv)
 		exit(1); 
 	}
       	vector<TDenseMatrix> U, V;
-      	TDenseMatrix TrueA0, TrueAplus;
-      	SetupRestrictionMatrices(U,V,TrueA0,TrueAplus,input);
+      	SetupRestrictionMatrices(U,V,input);
       	input.close();
 	
       	//////////////////////////////////////////////////////
       	// constant term, n_vars, n_predetermined, n_lags, n_exogenous, n_parameters
       	bool IsConstant=true;
-      	int n_lags=NumberLags(TrueA0,TrueAplus,IsConstant); 
-	int n_vars=TrueA0.cols; 
+	int n_vars=U[0].rows; 
+	int n_predetermined = V[0].rows; 
+      	int n_lags=NumberLags(TDenseMatrix(n_vars,n_vars,0.0),TDenseMatrix(n_vars,n_predetermined,0.0),IsConstant); 
       	int n_parameters=0;
       	for (int i=0; i < n_vars; i++) 
 		n_parameters+=U[i].cols+V[i].cols;
@@ -185,7 +184,7 @@ int main(int argc, char **argv)
        	mu(0) = 0.7; mu(1) = 0.5; mu(2) = 0.1; mu(3) = 1.2; mu(4) = 1.0; mu(5) = 1.0;
       	double periods_per_year=12.0;
       	SBVAR_symmetric_linear sbvar(&Data,mu,periods_per_year, 1.0, U, V);
-      	sbvar.SetParameters(TrueA0,TrueAplus);
+      	sbvar.DefaultParameters();
 
 	// Estimate parameters
 	sbvar.MaximizePosterior(1.0e-5,false);

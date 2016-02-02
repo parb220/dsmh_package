@@ -19,7 +19,6 @@ class CStorageHead;
 class CEESParameter;
 class CMetropolis; 
 class CEquiEnergyModel; 
-class MinusLogPosterior_NPSOL;
 class TDenseVector;
 class TDenseMatrix;
 

@@ -45,7 +45,7 @@ void DispatchTuneSimulation(double *sPackage, double *rPackage, const int N_MESS
 	}
 	// diagnostic statistics
 	// consistency
-	vector<double> consistency(model.parameter->number_energy_stage, 0.0), average_consistency(model.parameter->number_energy_stage, 0.0), std_consistency(model.parameter->number_energy_stage, 0.0), LB_ESS(model.parameter->number_energy_stage, 0.0); 
+	vector<double> consistency(model.parameter->number_energy_stage+1, 0.0), average_consistency(model.parameter->number_energy_stage+1, 0.0), std_consistency(model.parameter->number_energy_stage+1, 0.0), LB_ESS(model.parameter->number_energy_stage+1, 0.0); 
 	string consistency_filename = model.parameter->storage_dir + model.parameter->run_id + string("/") + model.parameter->run_id + string(".LogMDD.txt") ; 
 	ofstream consistency_file(consistency_filename.c_str(), iostream::out); 
 	if (!consistency_file)
@@ -93,39 +93,38 @@ void DispatchTuneSimulation(double *sPackage, double *rPackage, const int N_MESS
 	time_t rawtime;
 	double alpha_0 = LOWER_ALPHA, alpha_1 = UPPER_ALPHA; 
 
+	// Highest +1 stage
+	model.storage->InitializeBin(model.parameter->highest_stage+1);
+	if (model.parameter->highest_stage == model.parameter->number_energy_stage-1)
+	{
+		// draw highest stage + 1 sample
+		time(&rawtime);
+		log_file << "DispatchTuneSimulation() - drawing from prior: stage=" << model.parameter->highest_stage+1  << " " << ctime(&rawtime) << endl;
+
+		// samples = samples of highest+1 stage
+		samples = HighestPlus1Stage_Prior(sPackage, rPackage, N_MESSAGE, nNode, nInitial, model, jump_file);   // Sample from prior
+				
+		time(&rawtime);
+		log_file << "DispatchTuneSimulation() - done drawing from prior: stage=" << model.parameter->highest_stage+1 << " " << ctime(&rawtime) << endl;
+	}
+	else // samples from storage
+		samples = model.storage->DrawAllSample(model.parameter->highest_stage+1);  
+	
+	if (option & OPT_MLLR)
+	{
+		logMDD[model.parameter->highest_stage+1] = LogMDD(samples, model, model.parameter->lambda[model.parameter->highest_stage+1], USE_TRUNCATED_POWER, LIKELIHOOD_HEATED);
+		consistency_file << "Stage " << model.parameter->highest_stage+1 << ":\t\t\t\t" << logMDD[model.parameter->highest_stage+1] << endl; 
+		time(&rawtime);
+		log_file << "DispatchTuneSimulation() - done computing MDD: stage=" << model.parameter->highest_stage+1 << " " << ctime(&rawtime) << endl;
+	}
+	else if (model.parameter->highest_stage == model.parameter->number_energy_stage-1)
+		consistency[model.parameter->highest_stage+1] = 0.0; 
+	else 
+		consistency[model.parameter->highest_stage+1] = LogMDD(samples, model, model.parameter->lambda[model.parameter->highest_stage+1], USE_TRUNCATED_POWER, LIKELIHOOD_HEATED);
+ 
 	for (int stage=model.parameter->highest_stage; stage>=model.parameter->lowest_stage; stage--)
 	{
-		/////////////////////////////////////////////////////////////////////////////////
-		// Highest + 1 stage 
-		if (stage == model.parameter->highest_stage)
-		{
-			model.storage->InitializeBin(stage+1);
-			if (stage == model.parameter->number_energy_stage-1)
-			{
-		                // draw highest stage + 1 sample
-				time(&rawtime);
-				log_file << "DispatchTuneSimulation() - drawing from prior: stage=" << stage+1  << " " << ctime(&rawtime) << endl;
-
-				// samples = samples of highest+1 stage
-				samples = HighestPlus1Stage_Prior(sPackage, rPackage, N_MESSAGE, nNode, nInitial, model, jump_file);   // Sample from prior
-				
-				time(&rawtime);
-				log_file << "DispatchTuneSimulation() - done drawing from prior: stage=" << stage+1 << " " << ctime(&rawtime) << endl;
-
-				if (option & OPT_MLLR)
-				{
-					logMDD[stage+1] = LogMDD(samples, model, model.parameter->lambda[stage+1], USE_TRUNCATED_POWER, LIKELIHOOD_HEATED);
-					consistency_file << "Stage " << stage+1 << ":\t\t\t\t" << logMDD[stage+1] << endl; 
-					time(&rawtime);
-					log_file << "DispatchTuneSimulation() - done computing MDD: stage=" << stage+1 << " " << ctime(&rawtime) << endl;
-				}
-			}
-		}
-		// samples = samples of the previous stage
-		if (stage == model.parameter->number_energy_stage-1 )
-			consistency[stage] = CheckConvergency(samples, model, stage, stage+1, 0.0, average_consistency[stage], std_consistency[stage], LB_ESS[stage], LIKELIHOOD_HEATED, nInitial);
-		else
-			consistency[stage] = CheckConvergency(samples, model, stage, stage+1, consistency[stage+1], average_consistency[stage], std_consistency[stage], LB_ESS[stage], LIKELIHOOD_HEATED, nInitial); 
+		consistency[stage] = CheckConvergency(samples, model, stage, stage+1, consistency[stage+1], average_consistency[stage], std_consistency[stage], LB_ESS[stage], LIKELIHOOD_HEATED, nInitial); 
                 consistency_file << "Stage " << stage << ": " << setprecision(20) << consistency[stage] << "\t" << average_consistency[stage] << "\t" << std_consistency[stage]<< "\t" << LB_ESS[stage]; 
 	
 		////////////////////////////////////////////////////////////////////////////////
