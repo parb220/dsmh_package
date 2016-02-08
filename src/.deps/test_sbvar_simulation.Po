@@ -123,7 +123,7 @@ test_sbvar_simulation.o: time_series/test_sbvar_simulation.cpp \
  include/dsmh_mpi/mpi_constant.hpp include/dsmh_basic/CMetropolis.hpp \
  include/dsmh_mpi/storage_constant.hpp \
  include/dsmh_mpi/TaskScheduling.hpp include/dsmh_mpi/option.hpp \
- include/time_series/maximization_option.hpp include/dsmh_mpi/option.hpp
+ include/dsmh_mpi/option.hpp
 
 /usr/include/stdc-predef.h:
 
@@ -490,7 +490,5 @@ include/dsmh_mpi/storage_constant.hpp:
 include/dsmh_mpi/TaskScheduling.hpp:
 
 include/dsmh_mpi/option.hpp:
-
-include/time_series/maximization_option.hpp:
 
 include/dsmh_mpi/option.hpp:

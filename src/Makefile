@@ -79,7 +79,8 @@ POST_UNINSTALL = :
 build_triplet = x86_64-unknown-linux-gnu
 host_triplet = x86_64-unknown-linux-gnu
 bin_PROGRAMS = test_sbvar_simulation$(EXEEXT) \
-	test_tvsbvar_simulation$(EXEEXT)
+	test_tvsbvar_simulation$(EXEEXT) \
+	generic_model_simulation$(EXEEXT)
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/depcomp
@@ -95,35 +96,42 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am__objects_1 = dw_array.$(OBJEXT) dw_ascii.$(OBJEXT) \
+am__objects_1 = CEquiEnergy_generic_model.$(OBJEXT)
+am__objects_2 = dw_array.$(OBJEXT) dw_ascii.$(OBJEXT) \
 	dw_dense_matrix.$(OBJEXT) dw_elliptical.$(OBJEXT) \
 	dw_math.$(OBJEXT) dw_matrix.$(OBJEXT) dw_matrix_rand.$(OBJEXT) \
 	dw_parse_cmd.$(OBJEXT) dw_rand_gsl.$(OBJEXT) bmatrix.$(OBJEXT) \
 	dw_error.$(OBJEXT) tzmatlab.$(OBJEXT) dw_matrix_sort.$(OBJEXT) \
 	dw_ascii_cpp.$(OBJEXT)
-am__objects_2 = CEESParameter.$(OBJEXT) CEquiEnergyModel.$(OBJEXT) \
+am__objects_3 = CEESParameter.$(OBJEXT) CEquiEnergyModel.$(OBJEXT) \
 	CEquiEnergyModel_Initialize.$(OBJEXT) CMetropolis.$(OBJEXT) \
 	CPutGetBin.$(OBJEXT) CSampleIDWeight.$(OBJEXT) \
 	CStorageHead.$(OBJEXT) Glob.$(OBJEXT)
-am__objects_3 = DispatchSimulation.$(OBJEXT) \
+am__objects_4 = DispatchSimulation.$(OBJEXT) \
 	DispatchTuneSimulation.$(OBJEXT) EstimateLogMDD.$(OBJEXT) \
 	ExecutingSimulationTask.$(OBJEXT) \
 	GetCommunicationParameter.$(OBJEXT) \
 	HighestPlus1Stage.$(OBJEXT) master_deploying.$(OBJEXT) \
 	mdd_function.$(OBJEXT) slave_computing.$(OBJEXT)
-am__objects_4 = dw_data.$(OBJEXT) regime_processes.$(OBJEXT) \
+am_generic_model_simulation_OBJECTS =  \
+	generic_model_simulation.$(OBJEXT) $(am__objects_1) \
+	$(am__objects_2) $(am__objects_3) $(am__objects_4)
+generic_model_simulation_OBJECTS =  \
+	$(am_generic_model_simulation_OBJECTS)
+generic_model_simulation_LDADD = $(LDADD)
+am__objects_5 = dw_data.$(OBJEXT) regime_processes.$(OBJEXT) \
 	CEquiEnergy_TimeSeries.$(OBJEXT)
 am_test_sbvar_simulation_OBJECTS = sbvar.$(OBJEXT) \
 	sbvar_blocks.$(OBJEXT) test_sbvar_simulation.$(OBJEXT) \
-	$(am__objects_1) $(am__objects_2) $(am__objects_3) \
-	$(am__objects_4)
+	$(am__objects_2) $(am__objects_3) $(am__objects_4) \
+	$(am__objects_5)
 test_sbvar_simulation_OBJECTS = $(am_test_sbvar_simulation_OBJECTS)
 test_sbvar_simulation_LDADD = $(LDADD)
 am_test_tvsbvar_simulation_OBJECTS = hyper_parameter.$(OBJEXT) \
 	tvsbvar.$(OBJEXT) Sims_Zha.$(OBJEXT) Restriction.$(OBJEXT) \
 	tvsbvar_blocks.$(OBJEXT) test_tvsbvar_simulation.$(OBJEXT) \
-	$(am__objects_1) $(am__objects_2) $(am__objects_3) \
-	$(am__objects_4)
+	$(am__objects_2) $(am__objects_3) $(am__objects_4) \
+	$(am__objects_5)
 test_tvsbvar_simulation_OBJECTS =  \
 	$(am_test_tvsbvar_simulation_OBJECTS)
 test_tvsbvar_simulation_LDADD = $(LDADD)
@@ -172,9 +180,11 @@ AM_V_CXXLD = $(am__v_CXXLD_$(V))
 am__v_CXXLD_ = $(am__v_CXXLD_$(AM_DEFAULT_VERBOSITY))
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(test_sbvar_simulation_SOURCES) \
+SOURCES = $(generic_model_simulation_SOURCES) \
+	$(test_sbvar_simulation_SOURCES) \
 	$(test_tvsbvar_simulation_SOURCES)
-DIST_SOURCES = $(test_sbvar_simulation_SOURCES) \
+DIST_SOURCES = $(generic_model_simulation_SOURCES) \
+	$(test_sbvar_simulation_SOURCES) \
 	$(test_tvsbvar_simulation_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
@@ -313,9 +323,11 @@ utilities_SOURCES = utilities_dw/dw_array.c utilities_dw/dw_ascii.c utilities_dw
 dsmh_basci_SOURCES = dsmh_basic/CEESParameter.cpp dsmh_basic/CEquiEnergyModel.cpp dsmh_basic/CEquiEnergyModel_Initialize.cpp dsmh_basic/CMetropolis.cpp dsmh_basic/CPutGetBin.cpp dsmh_basic/CSampleIDWeight.cpp dsmh_basic/CStorageHead.cpp dsmh_basic/Glob.cpp
 dsmh_mpi_SOURCES = dsmh_mpi/DispatchSimulation.cpp dsmh_mpi/DispatchTuneSimulation.cpp dsmh_mpi/EstimateLogMDD.cpp dsmh_mpi/ExecutingSimulationTask.cpp dsmh_mpi/GetCommunicationParameter.cpp dsmh_mpi/HighestPlus1Stage.cpp dsmh_mpi/master_deploying.cpp dsmh_mpi/mdd_function.c dsmh_mpi/slave_computing.cpp
 time_series_SOURCES = time_series/dw_data.cpp time_series/regime_processes.cpp time_series/CEquiEnergy_TimeSeries.cpp
+generic_new_model_SOURCES = generic_new_model/CEquiEnergy_generic_model.cpp
 test_sbvar_simulation_SOURCES = time_series/sbvar.cpp time_series/sbvar_blocks.cpp time_series/test_sbvar_simulation.cpp $(utilities_SOURCES) $(dsmh_basci_SOURCES) $(dsmh_mpi_SOURCES) $(time_series_SOURCES)
 test_tvsbvar_simulation_SOURCES = time_series/hyper_parameter.cpp time_series/tvsbvar.cpp time_series/Sims_Zha.cpp time_series/Restriction.cpp time_series/tvsbvar_blocks.cpp time_series/test_tvsbvar_simulation.cpp $(utilities_SOURCES) $(dsmh_basci_SOURCES) $(dsmh_mpi_SOURCES) $(time_series_SOURCES)
-AM_CPPFLAGS = -Iinclude/utilities_dw -Iinclude/dsmh_basic -Iinclude/dsmh_mpi -Iinclude/time_series -DDATADIR=\"$(pkgdatadir)\"
+generic_model_simulation_SOURCES = generic_new_model/generic_model_simulation.cpp $(generic_new_model_SOURCES) $(utilities_SOURCES) $(dsmh_basci_SOURCES) $(dsmh_mpi_SOURCES) 
+AM_CPPFLAGS = -Iinclude/utilities_dw -Iinclude/dsmh_basic -Iinclude/dsmh_mpi -Iinclude/time_series -Iinclude/generic_new_model -DDATADIR=\"$(pkgdatadir)\"
 all: all-am
 
 .SUFFIXES:
@@ -393,6 +405,10 @@ uninstall-binPROGRAMS:
 clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
 
+generic_model_simulation$(EXEEXT): $(generic_model_simulation_OBJECTS) $(generic_model_simulation_DEPENDENCIES) $(EXTRA_generic_model_simulation_DEPENDENCIES) 
+	@rm -f generic_model_simulation$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(generic_model_simulation_OBJECTS) $(generic_model_simulation_LDADD) $(LIBS)
+
 test_sbvar_simulation$(EXEEXT): $(test_sbvar_simulation_OBJECTS) $(test_sbvar_simulation_DEPENDENCIES) $(EXTRA_test_sbvar_simulation_DEPENDENCIES) 
 	@rm -f test_sbvar_simulation$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(test_sbvar_simulation_OBJECTS) $(test_sbvar_simulation_LDADD) $(LIBS)
@@ -411,6 +427,7 @@ include ./$(DEPDIR)/CEESParameter.Po
 include ./$(DEPDIR)/CEquiEnergyModel.Po
 include ./$(DEPDIR)/CEquiEnergyModel_Initialize.Po
 include ./$(DEPDIR)/CEquiEnergy_TimeSeries.Po
+include ./$(DEPDIR)/CEquiEnergy_generic_model.Po
 include ./$(DEPDIR)/CMetropolis.Po
 include ./$(DEPDIR)/CPutGetBin.Po
 include ./$(DEPDIR)/CSampleIDWeight.Po
@@ -438,6 +455,7 @@ include ./$(DEPDIR)/dw_matrix_rand.Po
 include ./$(DEPDIR)/dw_matrix_sort.Po
 include ./$(DEPDIR)/dw_parse_cmd.Po
 include ./$(DEPDIR)/dw_rand_gsl.Po
+include ./$(DEPDIR)/generic_model_simulation.Po
 include ./$(DEPDIR)/hyper_parameter.Po
 include ./$(DEPDIR)/master_deploying.Po
 include ./$(DEPDIR)/mdd_function.Po
@@ -661,47 +679,33 @@ mdd_function.obj: dsmh_mpi/mdd_function.c
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(AM_V_CXX_no)$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
-sbvar.o: time_series/sbvar.cpp
-	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sbvar.o -MD -MP -MF $(DEPDIR)/sbvar.Tpo -c -o sbvar.o `test -f 'time_series/sbvar.cpp' || echo '$(srcdir)/'`time_series/sbvar.cpp
-	$(AM_V_at)$(am__mv) $(DEPDIR)/sbvar.Tpo $(DEPDIR)/sbvar.Po
-#	$(AM_V_CXX)source='time_series/sbvar.cpp' object='sbvar.o' libtool=no \
+generic_model_simulation.o: generic_new_model/generic_model_simulation.cpp
+	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT generic_model_simulation.o -MD -MP -MF $(DEPDIR)/generic_model_simulation.Tpo -c -o generic_model_simulation.o `test -f 'generic_new_model/generic_model_simulation.cpp' || echo '$(srcdir)/'`generic_new_model/generic_model_simulation.cpp
+	$(AM_V_at)$(am__mv) $(DEPDIR)/generic_model_simulation.Tpo $(DEPDIR)/generic_model_simulation.Po
+#	$(AM_V_CXX)source='generic_new_model/generic_model_simulation.cpp' object='generic_model_simulation.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sbvar.o `test -f 'time_series/sbvar.cpp' || echo '$(srcdir)/'`time_series/sbvar.cpp
+#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o generic_model_simulation.o `test -f 'generic_new_model/generic_model_simulation.cpp' || echo '$(srcdir)/'`generic_new_model/generic_model_simulation.cpp
 
-sbvar.obj: time_series/sbvar.cpp
-	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sbvar.obj -MD -MP -MF $(DEPDIR)/sbvar.Tpo -c -o sbvar.obj `if test -f 'time_series/sbvar.cpp'; then $(CYGPATH_W) 'time_series/sbvar.cpp'; else $(CYGPATH_W) '$(srcdir)/time_series/sbvar.cpp'; fi`
-	$(AM_V_at)$(am__mv) $(DEPDIR)/sbvar.Tpo $(DEPDIR)/sbvar.Po
-#	$(AM_V_CXX)source='time_series/sbvar.cpp' object='sbvar.obj' libtool=no \
+generic_model_simulation.obj: generic_new_model/generic_model_simulation.cpp
+	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT generic_model_simulation.obj -MD -MP -MF $(DEPDIR)/generic_model_simulation.Tpo -c -o generic_model_simulation.obj `if test -f 'generic_new_model/generic_model_simulation.cpp'; then $(CYGPATH_W) 'generic_new_model/generic_model_simulation.cpp'; else $(CYGPATH_W) '$(srcdir)/generic_new_model/generic_model_simulation.cpp'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/generic_model_simulation.Tpo $(DEPDIR)/generic_model_simulation.Po
+#	$(AM_V_CXX)source='generic_new_model/generic_model_simulation.cpp' object='generic_model_simulation.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sbvar.obj `if test -f 'time_series/sbvar.cpp'; then $(CYGPATH_W) 'time_series/sbvar.cpp'; else $(CYGPATH_W) '$(srcdir)/time_series/sbvar.cpp'; fi`
+#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o generic_model_simulation.obj `if test -f 'generic_new_model/generic_model_simulation.cpp'; then $(CYGPATH_W) 'generic_new_model/generic_model_simulation.cpp'; else $(CYGPATH_W) '$(srcdir)/generic_new_model/generic_model_simulation.cpp'; fi`
 
-sbvar_blocks.o: time_series/sbvar_blocks.cpp
-	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sbvar_blocks.o -MD -MP -MF $(DEPDIR)/sbvar_blocks.Tpo -c -o sbvar_blocks.o `test -f 'time_series/sbvar_blocks.cpp' || echo '$(srcdir)/'`time_series/sbvar_blocks.cpp
-	$(AM_V_at)$(am__mv) $(DEPDIR)/sbvar_blocks.Tpo $(DEPDIR)/sbvar_blocks.Po
-#	$(AM_V_CXX)source='time_series/sbvar_blocks.cpp' object='sbvar_blocks.o' libtool=no \
+CEquiEnergy_generic_model.o: generic_new_model/CEquiEnergy_generic_model.cpp
+	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT CEquiEnergy_generic_model.o -MD -MP -MF $(DEPDIR)/CEquiEnergy_generic_model.Tpo -c -o CEquiEnergy_generic_model.o `test -f 'generic_new_model/CEquiEnergy_generic_model.cpp' || echo '$(srcdir)/'`generic_new_model/CEquiEnergy_generic_model.cpp
+	$(AM_V_at)$(am__mv) $(DEPDIR)/CEquiEnergy_generic_model.Tpo $(DEPDIR)/CEquiEnergy_generic_model.Po
+#	$(AM_V_CXX)source='generic_new_model/CEquiEnergy_generic_model.cpp' object='CEquiEnergy_generic_model.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sbvar_blocks.o `test -f 'time_series/sbvar_blocks.cpp' || echo '$(srcdir)/'`time_series/sbvar_blocks.cpp
+#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o CEquiEnergy_generic_model.o `test -f 'generic_new_model/CEquiEnergy_generic_model.cpp' || echo '$(srcdir)/'`generic_new_model/CEquiEnergy_generic_model.cpp
 
-sbvar_blocks.obj: time_series/sbvar_blocks.cpp
-	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sbvar_blocks.obj -MD -MP -MF $(DEPDIR)/sbvar_blocks.Tpo -c -o sbvar_blocks.obj `if test -f 'time_series/sbvar_blocks.cpp'; then $(CYGPATH_W) 'time_series/sbvar_blocks.cpp'; else $(CYGPATH_W) '$(srcdir)/time_series/sbvar_blocks.cpp'; fi`
-	$(AM_V_at)$(am__mv) $(DEPDIR)/sbvar_blocks.Tpo $(DEPDIR)/sbvar_blocks.Po
-#	$(AM_V_CXX)source='time_series/sbvar_blocks.cpp' object='sbvar_blocks.obj' libtool=no \
+CEquiEnergy_generic_model.obj: generic_new_model/CEquiEnergy_generic_model.cpp
+	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT CEquiEnergy_generic_model.obj -MD -MP -MF $(DEPDIR)/CEquiEnergy_generic_model.Tpo -c -o CEquiEnergy_generic_model.obj `if test -f 'generic_new_model/CEquiEnergy_generic_model.cpp'; then $(CYGPATH_W) 'generic_new_model/CEquiEnergy_generic_model.cpp'; else $(CYGPATH_W) '$(srcdir)/generic_new_model/CEquiEnergy_generic_model.cpp'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/CEquiEnergy_generic_model.Tpo $(DEPDIR)/CEquiEnergy_generic_model.Po
+#	$(AM_V_CXX)source='generic_new_model/CEquiEnergy_generic_model.cpp' object='CEquiEnergy_generic_model.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sbvar_blocks.obj `if test -f 'time_series/sbvar_blocks.cpp'; then $(CYGPATH_W) 'time_series/sbvar_blocks.cpp'; else $(CYGPATH_W) '$(srcdir)/time_series/sbvar_blocks.cpp'; fi`
-
-test_sbvar_simulation.o: time_series/test_sbvar_simulation.cpp
-	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT test_sbvar_simulation.o -MD -MP -MF $(DEPDIR)/test_sbvar_simulation.Tpo -c -o test_sbvar_simulation.o `test -f 'time_series/test_sbvar_simulation.cpp' || echo '$(srcdir)/'`time_series/test_sbvar_simulation.cpp
-	$(AM_V_at)$(am__mv) $(DEPDIR)/test_sbvar_simulation.Tpo $(DEPDIR)/test_sbvar_simulation.Po
-#	$(AM_V_CXX)source='time_series/test_sbvar_simulation.cpp' object='test_sbvar_simulation.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o test_sbvar_simulation.o `test -f 'time_series/test_sbvar_simulation.cpp' || echo '$(srcdir)/'`time_series/test_sbvar_simulation.cpp
-
-test_sbvar_simulation.obj: time_series/test_sbvar_simulation.cpp
-	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT test_sbvar_simulation.obj -MD -MP -MF $(DEPDIR)/test_sbvar_simulation.Tpo -c -o test_sbvar_simulation.obj `if test -f 'time_series/test_sbvar_simulation.cpp'; then $(CYGPATH_W) 'time_series/test_sbvar_simulation.cpp'; else $(CYGPATH_W) '$(srcdir)/time_series/test_sbvar_simulation.cpp'; fi`
-	$(AM_V_at)$(am__mv) $(DEPDIR)/test_sbvar_simulation.Tpo $(DEPDIR)/test_sbvar_simulation.Po
-#	$(AM_V_CXX)source='time_series/test_sbvar_simulation.cpp' object='test_sbvar_simulation.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o test_sbvar_simulation.obj `if test -f 'time_series/test_sbvar_simulation.cpp'; then $(CYGPATH_W) 'time_series/test_sbvar_simulation.cpp'; else $(CYGPATH_W) '$(srcdir)/time_series/test_sbvar_simulation.cpp'; fi`
+#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o CEquiEnergy_generic_model.obj `if test -f 'generic_new_model/CEquiEnergy_generic_model.cpp'; then $(CYGPATH_W) 'generic_new_model/CEquiEnergy_generic_model.cpp'; else $(CYGPATH_W) '$(srcdir)/generic_new_model/CEquiEnergy_generic_model.cpp'; fi`
 
 dw_dense_matrix.o: utilities_dw/dw_dense_matrix.cpp
 	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT dw_dense_matrix.o -MD -MP -MF $(DEPDIR)/dw_dense_matrix.Tpo -c -o dw_dense_matrix.o `test -f 'utilities_dw/dw_dense_matrix.cpp' || echo '$(srcdir)/'`utilities_dw/dw_dense_matrix.cpp
@@ -954,6 +958,48 @@ slave_computing.obj: dsmh_mpi/slave_computing.cpp
 #	$(AM_V_CXX)source='dsmh_mpi/slave_computing.cpp' object='slave_computing.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o slave_computing.obj `if test -f 'dsmh_mpi/slave_computing.cpp'; then $(CYGPATH_W) 'dsmh_mpi/slave_computing.cpp'; else $(CYGPATH_W) '$(srcdir)/dsmh_mpi/slave_computing.cpp'; fi`
+
+sbvar.o: time_series/sbvar.cpp
+	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sbvar.o -MD -MP -MF $(DEPDIR)/sbvar.Tpo -c -o sbvar.o `test -f 'time_series/sbvar.cpp' || echo '$(srcdir)/'`time_series/sbvar.cpp
+	$(AM_V_at)$(am__mv) $(DEPDIR)/sbvar.Tpo $(DEPDIR)/sbvar.Po
+#	$(AM_V_CXX)source='time_series/sbvar.cpp' object='sbvar.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sbvar.o `test -f 'time_series/sbvar.cpp' || echo '$(srcdir)/'`time_series/sbvar.cpp
+
+sbvar.obj: time_series/sbvar.cpp
+	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sbvar.obj -MD -MP -MF $(DEPDIR)/sbvar.Tpo -c -o sbvar.obj `if test -f 'time_series/sbvar.cpp'; then $(CYGPATH_W) 'time_series/sbvar.cpp'; else $(CYGPATH_W) '$(srcdir)/time_series/sbvar.cpp'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/sbvar.Tpo $(DEPDIR)/sbvar.Po
+#	$(AM_V_CXX)source='time_series/sbvar.cpp' object='sbvar.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sbvar.obj `if test -f 'time_series/sbvar.cpp'; then $(CYGPATH_W) 'time_series/sbvar.cpp'; else $(CYGPATH_W) '$(srcdir)/time_series/sbvar.cpp'; fi`
+
+sbvar_blocks.o: time_series/sbvar_blocks.cpp
+	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sbvar_blocks.o -MD -MP -MF $(DEPDIR)/sbvar_blocks.Tpo -c -o sbvar_blocks.o `test -f 'time_series/sbvar_blocks.cpp' || echo '$(srcdir)/'`time_series/sbvar_blocks.cpp
+	$(AM_V_at)$(am__mv) $(DEPDIR)/sbvar_blocks.Tpo $(DEPDIR)/sbvar_blocks.Po
+#	$(AM_V_CXX)source='time_series/sbvar_blocks.cpp' object='sbvar_blocks.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sbvar_blocks.o `test -f 'time_series/sbvar_blocks.cpp' || echo '$(srcdir)/'`time_series/sbvar_blocks.cpp
+
+sbvar_blocks.obj: time_series/sbvar_blocks.cpp
+	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sbvar_blocks.obj -MD -MP -MF $(DEPDIR)/sbvar_blocks.Tpo -c -o sbvar_blocks.obj `if test -f 'time_series/sbvar_blocks.cpp'; then $(CYGPATH_W) 'time_series/sbvar_blocks.cpp'; else $(CYGPATH_W) '$(srcdir)/time_series/sbvar_blocks.cpp'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/sbvar_blocks.Tpo $(DEPDIR)/sbvar_blocks.Po
+#	$(AM_V_CXX)source='time_series/sbvar_blocks.cpp' object='sbvar_blocks.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sbvar_blocks.obj `if test -f 'time_series/sbvar_blocks.cpp'; then $(CYGPATH_W) 'time_series/sbvar_blocks.cpp'; else $(CYGPATH_W) '$(srcdir)/time_series/sbvar_blocks.cpp'; fi`
+
+test_sbvar_simulation.o: time_series/test_sbvar_simulation.cpp
+	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT test_sbvar_simulation.o -MD -MP -MF $(DEPDIR)/test_sbvar_simulation.Tpo -c -o test_sbvar_simulation.o `test -f 'time_series/test_sbvar_simulation.cpp' || echo '$(srcdir)/'`time_series/test_sbvar_simulation.cpp
+	$(AM_V_at)$(am__mv) $(DEPDIR)/test_sbvar_simulation.Tpo $(DEPDIR)/test_sbvar_simulation.Po
+#	$(AM_V_CXX)source='time_series/test_sbvar_simulation.cpp' object='test_sbvar_simulation.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o test_sbvar_simulation.o `test -f 'time_series/test_sbvar_simulation.cpp' || echo '$(srcdir)/'`time_series/test_sbvar_simulation.cpp
+
+test_sbvar_simulation.obj: time_series/test_sbvar_simulation.cpp
+	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT test_sbvar_simulation.obj -MD -MP -MF $(DEPDIR)/test_sbvar_simulation.Tpo -c -o test_sbvar_simulation.obj `if test -f 'time_series/test_sbvar_simulation.cpp'; then $(CYGPATH_W) 'time_series/test_sbvar_simulation.cpp'; else $(CYGPATH_W) '$(srcdir)/time_series/test_sbvar_simulation.cpp'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/test_sbvar_simulation.Tpo $(DEPDIR)/test_sbvar_simulation.Po
+#	$(AM_V_CXX)source='time_series/test_sbvar_simulation.cpp' object='test_sbvar_simulation.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o test_sbvar_simulation.obj `if test -f 'time_series/test_sbvar_simulation.cpp'; then $(CYGPATH_W) 'time_series/test_sbvar_simulation.cpp'; else $(CYGPATH_W) '$(srcdir)/time_series/test_sbvar_simulation.cpp'; fi`
 
 dw_data.o: time_series/dw_data.cpp
 	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT dw_data.o -MD -MP -MF $(DEPDIR)/dw_data.Tpo -c -o dw_data.o `test -f 'time_series/dw_data.cpp' || echo '$(srcdir)/'`time_series/dw_data.cpp

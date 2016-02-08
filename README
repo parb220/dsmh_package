@@ -11,33 +11,37 @@ c. Run 'make clean' for clean-up.
 
 3. When dsmh cannot be successfully installed, check whether the required libraries have been properly installed.
 a1. GSL header files
-The header files of the gsl package should by default be installed in /usr/local/include/gsl/ or /usr/include/gsl/. If not, then the directory of the header files should be specified when running 'configure' (2a, in addition to the other flags), as follows:
+The header files of the gsl package should by default be installed in /usr/local/include/gsl/ or /usr/include/gsl/. If not, then the directory of the header files should be specified when running 'configure' (2a), as follows:
 
 configure CXXFLAGS=-I[directory-of-gsl-header-files]
 
 a2. GSL library files
-The GSL library files, libm.so (or libm.a), libgslcblas.so (or libgslcblas.a), and libgsl.so (libgsl.a), should by default be installed in /usr/local/lib/ or /usr/lib64/ or /usr/lib/. If not, then the directory of the library files should be specified when running 'configure' (2a, in addition to the other flags), as follows:
+The GSL library files, libm.so (or libm.a), libgslcblas.so (or libgslcblas.a), and libgsl.so (or libgsl.a), should by default be installed in /usr/local/lib/ or /usr/lib64/ or /usr/lib/. If not, then the directory of the library files should be specified when running 'configure' (2a), as follows:
 
 configure LDFLAGS=-L[directory-of-gsl-library-files]
 
 b. BLAS 
-The BLAS library file, libblas.so (or libblas.a), should by default be installed in /usr/lib64/ or /usr/lib/ or /usr/local/lib/. If not, then the directory of this library file should be specified when running 'configure' (2a, in addition to the other flags), as follows:
+The BLAS library file, libblas.so (or libblas.a), should by default be installed in /usr/lib64/ or /usr/lib/ or /usr/local/lib/. If not, then the directory of this library file should be specified when running 'configure' (2a), as follows:
 
 configure LDFLAGS=-L[directory-of-blas-library-file]
 
 c. LAPACK
-The LAPACK library file, liblapack.so (or liblapack.a), should by default be installed in /usr/lib64 or /usr/lib/ or /usr/local/lib/. If not, then the directory of this library file should be specified when running 'configure' (2a, in addition to the other flags), as follows:
+The LAPACK library file, liblapack.so (or liblapack.a), should by default be installed in /usr/lib64 or /usr/lib/ or /usr/local/lib/. If not, then the directory of this library file should be specified when running 'configure' (2a), as follows:
 
 configure LDFLAGS=-L[directory-of-blas-library-file]
 
 d. MPICH
-The MPICH library file, libmpi.so (or libmpi.a), should by default be installed in /usr/local/lib or /usr/lib64/ or /usr/lib/. If not, then the directory of this library file should be specified when running 'configure' (2a, in addition to the other flags), as follows:
+d1.MPICH header files
+The MPCH header file, mpi.h, should by default be installed in /usr/local/include/ or /usr/include/. If not, then the directory of the header file should be specified when running 'configure' (2a), as follows:
+
+configure CXXFLAGS=-I[directory-of-mpich-header-file]
+
+d2. MPICH library files
+The MPICH library file, libmpi.so (or libmpi.a), should by default be installed in /usr/local/lib or /usr/lib64/ or /usr/lib/. If not, then the directory of this library file should be specified when running 'configure' (2a), as follows:
 
 configure LDFLAGS=-L[directory-of-mpi-library-file]
 
-e. In the above (a1-d), if mutiple paths need to be specified with either CXXFLAGS or LDFLAGS, then single quotes should be used to enclose all the paths, as follows:
+e. In the above (a1-d2), if mutiple paths need to be specified with either CXXFLAGS or LDFLAGS, then single quotes should be used to enclose all the paths, as follows:
 
 CXXFLAGS='-I[path1] -I[path2] ...'
 LDFLAGS='-L[path1] -L[path2] ...'
-
-4. For new models, revise src/Makefile.am accordingly.

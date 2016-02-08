@@ -18,7 +18,6 @@
 #include "CMetropolis.hpp"
 #include "storage_constant.hpp"
 #include "TaskScheduling.hpp"
-#include "maximization_option.hpp"
 #include "option.hpp"
 
 using namespace std; 
@@ -29,8 +28,8 @@ int main(int argc, char **argv)
         {
                 {"data_file", required_argument, 0, 'D'},
                 {"restriction_file", required_argument, 0, 'S'},
-		{"output directory", required_argument, 0, 'F'}, 
 		// Simulation options
+		{"output directory", required_argument, 0, 'F'}, 
 		{"ID", required_argument, 0, 'R'},
                 {"Pure Metropolis-Hasting", no_argument, 0, 'o'},
                 {"Number of stages", required_argument, 0, 'H'},
