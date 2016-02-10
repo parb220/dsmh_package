@@ -35,16 +35,12 @@ private:
 public:
 ///////////////////////////////////////////////////////////////
 // Parameters for equi-energy sampling
-	bool if_bounded; 
- 	int energy_stage;		
-	double lambda; 
+	bool if_bounded;	// whether likelihood should be raised to power of lambda 
+ 	int energy_stage;	// index of current stage	
+	double lambda; 		// lambda of current stage
 
 //////////////////////////////////////////////////////////////
-// Current sample holding the following 
-// 	Sample: 
-// 	ID:	unique id of the sample (by default is the difference
-// 		between when it is drawn and when the program is started)
-// 	Weight:	energy (log posterior)
+// Current sample 
 	CSampleIDWeight current_sample; 
 	int timer_when_started; 
 	
@@ -68,15 +64,16 @@ public:
 	virtual void Take_New_Sample_As_Current_Sample(const CSampleIDWeight &x); 
 
 public:
-	std::vector<int> BurnIn(int burn_in_length) ;	
-	std::vector<int> Simulation_Within(TDenseMatrix &jump_table, bool if_storage, const string &sample_file_name=string()); 	// Simulation within the same energy stage (no jumping across stages). Returns the maximum posterior during simulation
-	std::vector<int> Simulation_Cross(TDenseMatrix &jump_table, bool if_storage, const string &sample_file_name=string()); 	// Simulation across stages. Returns the maximum posterior during simulation 	
-	std::vector<int> Simulation_Prior(bool if_storage, const string &sample_file_name=string()); 	// Simulation from prior
+	std::vector<int> BurnIn(int burn_in_length) ;	// Return a two-element vector, containing the number of EE jumps and the number of MH jumps
+	std::vector<int> Simulation_Within(TDenseMatrix &jump_table, bool if_storage, const string &sample_file_name=string()); 	// Simulation within the same energy stage (no jumping across stages). Return a two-element vector, containing the number of EE jumps and the number of MH jumps
+	std::vector<int> Simulation_Cross(TDenseMatrix &jump_table, bool if_storage, const string &sample_file_name=string()); 	// Simulation across stages. Return a two-element vector, containing the number of EE jumps and the number of MH jumps	
+	std::vector<int> Simulation_Prior(bool if_storage, const string &sample_file_name=string()); 	// Simulation from prior. Return a two-element vector, containing the number of EE jumps and the number of MH jumps 
+	
 	virtual bool DrawParametersFromPrior(double *x) const = 0;
 	
-	std::vector<CSampleIDWeight> Initialize_WeightedSampling(const std::vector<CSampleIDWeight> &, int K, int stage_index) ; 
+	std::vector<CSampleIDWeight> Initialize_WeightedSampling(const std::vector<CSampleIDWeight> &, int K, int stage_index) ; // Make K draws from the draws of the previous stage (as the input) according to the re-calculated weight. Return the K draws
 	// Reweight samples
-	vector<double> Reweight(const vector<CSampleIDWeight> &samples, int current_stage, int previous_stage); 
+	vector<double> Reweight(const vector<CSampleIDWeight> &samples, int current_stage, int previous_stage); // Recalculate of the samples according to the lambda's of the current and prevsious stage indices
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 // Construction & Destruction functions here

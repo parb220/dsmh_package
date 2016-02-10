@@ -14,7 +14,7 @@ class CMetropolis
 public: 
 	CEquiEnergyModel* model;	// pointers to CEquiEnergyModel
 protected:
-	vector<TIndex> block_scheme; 	// assignments of the dimensions into the blocks. block_scheme[i] contains the dimensions assgined to the i-th block, which could be continuous or discontinues (general case)
+	vector<TIndex> block_scheme; 	// assignments of the dimensions the blocks. block_scheme[i] contains the dimensions assgined to the i-th block, which could be consecutive or disconsecutive (general case)
 	vector<TDenseMatrix> blocks; 	// directions of the block. blocks[i] is n-by-bi,  where n is the dimension of the sample, bi is the size of the i-th block. 
 
 public:
@@ -27,6 +27,7 @@ public:
 	bool ReadBlocks(const string &file_name);
 	bool ReadBlockScheme(const string &file_name); 
 
+	// Block direction and scale operations
 	void GetBlockMatrix_WeightedSampling(const std::vector<CSampleIDWeight> &Y, const std::vector<double> &weight); 
 	bool SetScale(const vector<double> &_scale); 
 	bool SetScale(double _scale); 

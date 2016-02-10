@@ -11,9 +11,9 @@ using namespace std;
 class CPutGetBin					 
 {
 private: 
-	bool check_file_fetch_consolidate; 
-	std::vector<string> filename_fetch; 
-	std::vector<string> filename_consolidate; 
+	bool check_file_fetch_consolidate;	// flag, set as true if the files for fetch and consolidation have been checked 
+	std::vector<string> filename_fetch; 	// files for fetch
+	std::vector<string> filename_consolidate; // files for consolidation
 protected:
 	int suffix;  
 	string id; 
@@ -21,7 +21,7 @@ protected:
 	int capacity; 			// capacity of this bin for put and get;
 	int nPutUsed; 			// available space for put (will be reset as capacity after each dump, and will decrease as a sample is depoisited)
 	int nGetUsed; 			// available data for get (will be reset as capacity after each fetch, and will decrease as a sample is drawn)	
-	string filename_prefix; 		// run_id.id.indxx (index = nSampleGeneratedByFar/capacity); 
+	string filename_prefix; 		// run_id.id.index (index = nSampleGeneratedByFar/capacity); 
 	vector <CSampleIDWeight> dataPut; 	// space for put
 	vector <CSampleIDWeight> dataGet; 	// data for get 
 
@@ -52,9 +52,9 @@ public:
 	int DepositSample(const CSampleIDWeight &); 
 	bool DrawSample(CSampleIDWeight &); 
 
-	void finalize(); 	// save unsaved data
+	void finalize(); 	// save data in memory
 	void consolidate(); 	// conslidate partial sample files into complete sample files
-	void restore();	// load data from a partial file
+	void restore();	// load data from a partial file to memory
 	void RestoreForFetch(); // load data from a partial file but will not update it later. This is used for single-thread mpi version so that for each stage it will load partial files for its higher stage for ee draw later
 	bool empty() const; 
 

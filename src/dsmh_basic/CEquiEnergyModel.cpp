@@ -16,6 +16,11 @@
 using namespace std;
 
 bool CEquiEnergyModel::JumpAcrossStriation(const CSampleIDWeight &y_end, const CSampleIDWeight &y_initial, TDenseMatrix &jump_table) const 
+// For diagnostic information, determine the bins of the initial (y_initial) and end (y_end) draws, 
+// and update the jump table (initial_bin_index, end_bin_index)
+// 
+// This function can only be called when the current index of stage (energy_stage) < number_energy_stage (H)
+// and when the dimension of jump_table is appropriate. Otherwise, the return value will be false.
 {
 	if (energy_stage == parameter->number_energy_stage)
 		return false; 
@@ -30,6 +35,9 @@ bool CEquiEnergyModel::JumpAcrossStriation(const CSampleIDWeight &y_end, const C
 }
 
 bool CEquiEnergyModel::MakeEquiEnergyJump(CSampleIDWeight &y_end, const CSampleIDWeight &y_initial)
+// Given the current sample (y_initial), make an equi-energy jump. 
+// When the EE jump is successful, return true, and fill y_end with the draw from the same ring of the previous stage
+// When the EE jump is not successful, return false, and fill y_end with the current draw (y_initial)
 {
 	double heated_initial = y_initial.reserved*parameter->lambda[energy_stage+1] + (y_initial.weight - y_initial.reserved); 
 	if(storage->DrawSample(energy_stage+1, storage->BinIndex(energy_stage+1,-heated_initial), y_end) ) // if a sample is successfully draw from bin
@@ -57,6 +65,11 @@ void CEquiEnergyModel::Take_New_Sample_As_Current_Sample(const CSampleIDWeight &
 }
 
 int CEquiEnergyModel::EE_Draw()
+// Make an EE jump or MH jump. 
+// The probability of EE jump is determined by pee
+// Returns the code of jump (EQUI_ENERGY_JUMP if an equi-energy jump is successful
+// METROPOLIS_JUMP if an MH jump is successful
+// or NO_JUMP if neither of the jumps is successful)
 {
 	CSampleIDWeight x_new; 
 	int new_sample_code = NO_JUMP; 
@@ -69,7 +82,7 @@ int CEquiEnergyModel::EE_Draw()
 			new_sample_code = EQUI_ENERGY_JUMP; 
 		}
 	}
-	else 
+	else // MH jump
 	{
 		double bounded_log_posterior_new; 
 		if (metropolis->BlockRandomWalkMetropolis(bounded_log_posterior_new, x_new, current_sample, 1))
@@ -82,8 +95,11 @@ int CEquiEnergyModel::EE_Draw()
 	return new_sample_code; 
 }
 
-
 std::vector<int> CEquiEnergyModel::BurnIn(int burn_in_length)
+// Burn-in for the specified length (burn_in_length) 
+// Return a two-element vector. 
+// The first element contains the number of EE jumps (=0) during the burn-in phase
+// The second element contains the number of MH jumps during the burn-in phase
 {
 	CSampleIDWeight x_new; 
 	int nMHJump =0; 
@@ -104,6 +120,12 @@ std::vector<int> CEquiEnergyModel::BurnIn(int burn_in_length)
 }
 
 std::vector<int> CEquiEnergyModel::Simulation_Prior(bool if_storage, const string &sample_file_name)
+// Make draws from the prior distribution for the specified length (simulation_length)
+// If sample_file_name is provided and can be opend successfully for writing
+// draws will also be written into the file in binary format
+// Only keep the draws whose corresponding log_posterior values are valid (> MINUS_INFINITY)
+// Return a two-element vector of zeros, indicating the number of EE jumps and the numebr of
+// MH jumps
 {
 	CSampleIDWeight x_new(TDenseVector(current_sample.data.dim));   
         bool if_write_file = false;
@@ -135,6 +157,13 @@ std::vector<int> CEquiEnergyModel::Simulation_Prior(bool if_storage, const strin
 }
 
 std::vector<int> CEquiEnergyModel::Simulation_Within(TDenseMatrix &jump_table, bool if_storage, const string &sample_file_name) 
+// Make MH draws for the specified length (simulation_length) and thinning factor (THIN)
+// If sample_file_name is provided and can be opened successfully for writing, 
+// draws will also be written into the file in binary format
+// If if_storage is set as true, samples will be saved to storage
+// Return a two-element vector, 
+// with the first element being zero, indicating the number of EE jumps being zero during the simulation process
+// with the second element being the number of MH jumps during the simulation process. 
 {
 	CSampleIDWeight x_new; 
 	int nMHJump =0; 
@@ -160,9 +189,6 @@ std::vector<int> CEquiEnergyModel::Simulation_Within(TDenseMatrix &jump_table, b
                         	nMHJump ++;
 			}
 		}
-		// if (jump_table.rows && jump_table.cols)
-		// 	JumpAcrossStriation(x_new, current_sample, jump_table); 
-		// Take_New_Sample_As_Current_Sample(x_new);
 		
 		if (if_storage)
 			SaveSampleToStorage(current_sample);
@@ -178,6 +204,13 @@ std::vector<int> CEquiEnergyModel::Simulation_Within(TDenseMatrix &jump_table, b
 }
 
 std::vector<int> CEquiEnergyModel::Simulation_Cross(TDenseMatrix &jump_table, bool if_storage, const string &sample_file_name)
+// Make EE/MH draws for the specified length (simulation_length) and thinning factor (THIN)
+// If sample_file_name is provided and can be opened successfully for writing, 
+// draws will be written into the file in binary format
+// If if_storage is set as true, draws will be saved into storage
+// Return a two-element vector
+// with the first element being the number of EE jumps
+// and the second element being the number of MH jumps
 {
 	CSampleIDWeight x_old; 
 

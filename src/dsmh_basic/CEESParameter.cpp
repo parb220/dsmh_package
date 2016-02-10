@@ -27,7 +27,13 @@ CEESParameter::~CEESParameter()
 {}		
 
 bool CEESParameter::SetTemperature_geometric()
-// t[i+1] = t[i] * r
+// Given:
+//	lambda[number_energy_stage] = 0.0; 
+// 	lambda[number_energy_stage-1] = lambda_1
+// 	lambda[0] = 1.0
+//
+// We first determine r = lambda[i]/lambda[i-1] for 1<=i <=number_energy_stage-1
+// and then determine lambda for stages from 1 through number_energy_stage-2	
 {
 	// lambda
 	if (number_energy_stage <= 0)
@@ -45,6 +51,12 @@ bool CEESParameter::SetTemperature_geometric()
 }
 
 bool CEESParameter::SetTemperature_quadratic()
+// Given:
+// 	lambda[0] = 1.0
+//	lambda[number_energy_stage] = 0.0; 
+// Determine lambda as 
+// 	lambda[i] = (H-i)^2/H^2
+// Does not need information of lambda_1
 {
 	// lambda
 	if (number_energy_stage <= 0)
@@ -58,6 +70,12 @@ bool CEESParameter::SetTemperature_quadratic()
 }
 
 bool CEESParameter::SetTemperature_polynomial(double r)
+// Given:
+// 	lambda[0] = 1.0
+// 	lambda[number_energy_stage] = 0.0
+// Determine lambda as
+// 	lambda[i] = (H-i)^r/H^r
+// where r needs to be specified by the user	
 {
 	if (number_energy_stage <= 0)
 		return false; 	
@@ -71,6 +89,9 @@ bool CEESParameter::SetTemperature_polynomial(double r)
 }
 
 double CEESParameter::LogRatio_Stage(const CSampleIDWeight &x, const CSampleIDWeight &y, int stage) const 
+// Given two draws and the index of stage, calculate the LogRatio of posterior probabilities, where the likelihood 
+// part of the posterior probability is raised to the power of lambda[stage]
+// This log ratio is used to determine whether to accept an EE jump
 {
 	double log_prob_x_bounded = lambda[stage]*x.reserved + (x.weight-x.reserved); 
 	double log_prob_y_bounded = lambda[stage]*y.reserved + (y.weight-y.reserved); 

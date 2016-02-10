@@ -7,6 +7,10 @@
 
 using namespace std; 
 
+// Multiply the block directions by the scales 
+// where scales can be different for different directions
+// Return false if the number of scales does not match the number of directions
+// Otherwise return true
 bool CMetropolis::SetScale(const vector<double> &_scale)
 {
 	if (_scale.size() != blocks.size() )
@@ -16,6 +20,8 @@ bool CMetropolis::SetScale(const vector<double> &_scale)
 	return true; 
 }
 
+// Multiply the block directions by the same scale
+// Always return true
 bool CMetropolis::SetScale(double _scale)
 {
 	for (int i=0; i<(int)blocks.size(); i++)
@@ -23,6 +29,7 @@ bool CMetropolis::SetScale(double _scale)
 	return true; 
 }
 
+// Set block directions as provided
 void CMetropolis::SetBlocks(const vector<TDenseMatrix> &_blocks)
 {
 	blocks = _blocks; 
@@ -30,6 +37,7 @@ void CMetropolis::SetBlocks(const vector<TDenseMatrix> &_blocks)
 		blocks[i].CopyContent(_blocks[i]); 
 }
 
+// Set block scheme as provided. 
 void CMetropolis::SetBlockScheme(const vector<TIndex> &_index)
 {
 	block_scheme = _index;
@@ -37,16 +45,16 @@ void CMetropolis::SetBlockScheme(const vector<TIndex> &_index)
 
 bool CMetropolis:: BlockRandomWalkMetropolis(double &log_posterior_y, CSampleIDWeight &y, const CSampleIDWeight &initial_v, int thin)
 // Given
-//	initial_v:	initial value, vector
+//	initial_v:	initial draw 
 // Results:
-// 	y:	new vector according to random-walk metropolis
+// 	y:	new draw according to random-walk metropolis
 // 	log_posterior_y:	log_posterior(y)
 // Returns:
 // 	true:	if y is a new sample (different than x)
 // 	false:	if y is the same as x
 // Involving:
-// 	blocks:	k matrices, each of which is n*b(i) consisting of the direction vectors of the i-th block
-// 	model:	contains target distribution	
+// 	blocks:	k matrices, each of which is n*b(i) consisting of the direction and scale of the i-th block
+// 	model:	points to target distribution	
 {
 	int k=blocks.size(); 	// number of blocks	
 	vector<int> b(k); 	// size of each block
@@ -78,6 +86,10 @@ bool CMetropolis:: BlockRandomWalkMetropolis(double &log_posterior_y, CSampleIDW
 	return if_new_sample; 
 }
 
+
+// Reading blocks from the sepcified file (file_name)
+// Return false if the file cannot be opended for reading
+// Otherwise return true
 bool CMetropolis::ReadBlocks(const string &file_name)
 {
 	fstream iFile(file_name.c_str(), ios::in|ios::binary); 
@@ -107,6 +119,9 @@ bool CMetropolis::ReadBlocks(const string &file_name)
 	return true; 	
 }
 
+// Write blocks into the specified file (file_name) in binary format
+// Return false if the file cannot be opened for writing
+// Otherwise return true
 bool CMetropolis::WriteBlocks(const string &file_name)
 {
 	fstream oFile(file_name.c_str(), ios::out|ios::binary); 
@@ -133,6 +148,10 @@ bool CMetropolis::WriteBlocks(const string &file_name)
 	return true;
 }
 
+// Calculate the weighed mean and covariance matrix of the samples,
+// where the weights and samples are provided as inputs
+// Do the SVD of the weighted convariance matrix 
+// to obtaine the block direction
 void CMetropolis::GetBlockMatrix_WeightedSampling(const std::vector<CSampleIDWeight> &Y, const std::vector<double> &weight)
 {
 	blocks.resize(block_scheme.size()); 
@@ -161,6 +180,9 @@ void CMetropolis::GetBlockMatrix_WeightedSampling(const std::vector<CSampleIDWei
        }
 }
 
+// Read block scheme from the specified file (file_name)
+// Return false if the file cannot be opened for reading
+// Otherwise return true
 bool CMetropolis::ReadBlockScheme(const string &file_name)
 {
 	ifstream input; 

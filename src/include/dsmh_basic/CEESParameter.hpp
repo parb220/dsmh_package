@@ -11,21 +11,20 @@ class CSampleIDWeight;
 class CEESParameter 
 {
 public:
-	// The following parameter can either be determined from reading the file or command line or by default values (specified in a header file)
-	string storage_dir;	// fold to store all relevant information
-	int storage_marker;		// number of samples stored in memory for retrieve 
-	string run_id; 
+	string storage_dir;	// fold to store 
+	int storage_marker;	// number of samples stored in memory before replenish from the hard drive
+	string run_id;		// id of the run 
 	int number_energy_stage;	// number of energy stages
 	int number_striation; 	// number of rings
 	double pee; 	// probability of equi-energy-jump
-	double lambda_1;	// 1.0/tN_1
-	vector<double> lambda; 	// 1.0/t
+	double lambda_1;	// lambda for the highest temperature stage
+	vector<double> lambda; 	// lambda for all temperature stages
 	
 	int highest_stage; 
 	int lowest_stage; 
 	int THIN;  	// thinning factor for MH samples
-	int simulation_length; 
-	int burn_in_length; 
+	int simulation_length; // length of simulation
+	int burn_in_length; // length of burn-in
 public:
 	CEESParameter(); 
 	~CEESParameter(); 
