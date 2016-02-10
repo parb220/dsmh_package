@@ -220,7 +220,7 @@ AUTOCONF = ${SHELL} /home/hongweiwu/dsmh_package/missing autoconf
 AUTOHEADER = ${SHELL} /home/hongweiwu/dsmh_package/missing autoheader
 AUTOMAKE = ${SHELL} /home/hongweiwu/dsmh_package/missing automake-1.13
 AWK = gawk
-BLAS_LIBS = -lblas
+BLAS_LIBS = -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lpthread
 CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2
@@ -228,9 +228,9 @@ CPPFLAGS =
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
-CXXFLAGS = -g -O2
+CXXFLAGS = -I/opt/intel/mkl/include
 CYGPATH_W = echo
-DEFS = -DPACKAGE_NAME=\"dsmh\" -DPACKAGE_TARNAME=\"dsmh\" -DPACKAGE_VERSION=\"1.0\" -DPACKAGE_STRING=\"dsmh\ 1.0\" -DPACKAGE_BUGREPORT=\"hongwei.wu@atl.frb.org\" -DPACKAGE_URL=\"\" -DPACKAGE=\"dsmh\" -DVERSION=\"1.0\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_MPI=1 -DHAVE_LIBM=1 -DHAVE_LIBGSLCBLAS=1 -DHAVE_LIBGSL=1 -DHAVE_BLAS=1
+DEFS = -DPACKAGE_NAME=\"dsmh\" -DPACKAGE_TARNAME=\"dsmh\" -DPACKAGE_VERSION=\"1.0\" -DPACKAGE_STRING=\"dsmh\ 1.0\" -DPACKAGE_BUGREPORT=\"hongwei.wu@atl.frb.org\" -DPACKAGE_URL=\"\" -DPACKAGE=\"dsmh\" -DVERSION=\"1.0\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_BLAS=1 -DHAVE_MPI=1 -DHAVE_LIBM=1 -DHAVE_LIBGSLCBLAS=1 -DHAVE_LIBGSL=1
 DEPDIR = .deps
 ECHO_C = 
 ECHO_N = -n
@@ -239,17 +239,17 @@ EGREP = /usr/bin/grep -E
 EXEEXT = 
 FC = gfortran
 FCFLAGS = -g -O2
-FCLIBS =  -L/usr/lib/gcc/x86_64-redhat-linux/4.8.3 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.3/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.3/../../.. -lgsl -lgslcblas -lgfortran -lm -lmpi -lquadmath
+FCLIBS =  -L/opt/intel/mkl/lib/intel64/ -L/usr/lib/gcc/x86_64-redhat-linux/4.8.3 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.3/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.3/../../.. -lgfortran -lm -lquadmath
 GREP = /usr/bin/grep
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
-LAPACK_LIBS = -llapack
-LDFLAGS = 
+LAPACK_LIBS = 
+LDFLAGS = -L/opt/intel/mkl/lib/intel64/
 LIBOBJS = 
-LIBS = -llapack -lblas  -L/usr/lib/gcc/x86_64-redhat-linux/4.8.3 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.3/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.3/../../.. -lgsl -lgslcblas -lgfortran -lm -lmpi -lquadmath
+LIBS = -lgsl -lgslcblas -lm -lmpi  -lmkl_gf_lp64 -lmkl_sequential -lmkl_core -lpthread  -L/opt/intel/mkl/lib/intel64/ -L/usr/lib/gcc/x86_64-redhat-linux/4.8.3 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.3/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.3/../../.. -lgfortran -lm -lquadmath
 LTLIBOBJS = 
 MAKEINFO = ${SHELL} /home/hongweiwu/dsmh_package/missing makeinfo
 MKDIR_P = /usr/bin/mkdir -p

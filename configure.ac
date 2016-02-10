@@ -29,6 +29,10 @@ AC_LANG([C++])
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_SIZE_T
 
+# blas lapack
+sinclude(m4_ax_lapack.m4)
+AX_LAPACK([LIBS="$LAPACK_LIBS $BLAS_LIBS $FCLIBS"],[AC_MSG_ERROR([blas/lapack requested but not found.])])
+
 # mpi
 sinclude(m4_ax_prog_cxx_mpi.m4)
 AX_PROG_CXX_MPI([with_mpi=yes],[],[AC_MSG_ERROR([mpi compiler requested but not found.])])
@@ -38,10 +42,6 @@ AC_CHECK_LIB([m],[cos])
 AC_CHECK_LIB([gslcblas],[cblas_dgemm])
 AC_CHECK_LIB([gsl],[gsl_blas_dgemm])
 
-# blas lapack
-sinclude(m4_ax_lapack.m4)
-AX_LAPACK([LIBS="$LAPACK_LIBS $BLAS_LIBS $FCLIBS"],[AC_MSG_ERROR([blas/lapack requested but not found.])])
-#LIBS="$LAPACK_LIBS $BLAS_LIBS $FCLIBS"
 
 # distribute additional compiler and linker flags among Makefiles
 # --> set and change these variables instead of CXXFLAGS or LDFLAGS (for user only)
