@@ -74,15 +74,13 @@ regime_processes.o: time_series/regime_processes.cpp \
  /usr/include/c++/4.8.3/bits/codecvt.h /usr/include/c++/4.8.3/cstdio \
  /usr/include/libio.h /usr/include/_G_config.h \
  /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
- /usr/include/bits/stdio.h \
  /usr/include/c++/4.8.3/x86_64-redhat-linux/bits/basic_file.h \
  /usr/include/c++/4.8.3/x86_64-redhat-linux/bits/c++io.h \
  /usr/include/c++/4.8.3/bits/fstream.tcc /usr/include/math.h \
  /usr/include/bits/huge_val.h /usr/include/bits/huge_valf.h \
  /usr/include/bits/huge_vall.h /usr/include/bits/inf.h \
  /usr/include/bits/nan.h /usr/include/bits/mathdef.h \
- /usr/include/bits/mathcalls.h /usr/include/bits/mathinline.h \
- include/utilities_dw/prcsn.h \
+ /usr/include/bits/mathcalls.h include/utilities_dw/prcsn.h \
  /usr/lib/gcc/x86_64-redhat-linux/4.8.3/include/float.h \
  include/utilities_dw/dw_rand.h include/utilities_dw/prcsn.h \
  include/utilities_dw/dw_math.h /usr/local/include/gsl/gsl_rng.h \
@@ -90,12 +88,11 @@ regime_processes.o: time_series/regime_processes.cpp \
  /usr/include/bits/waitstatus.h /usr/include/sys/types.h \
  /usr/include/sys/select.h /usr/include/bits/select.h \
  /usr/include/bits/sigset.h /usr/include/sys/sysmacros.h \
- /usr/include/alloca.h /usr/include/bits/stdlib-bsearch.h \
- /usr/include/bits/stdlib-float.h /usr/local/include/gsl/gsl_types.h \
- /usr/local/include/gsl/gsl_errno.h /usr/include/errno.h \
- /usr/include/bits/errno.h /usr/include/linux/errno.h \
- /usr/include/asm/errno.h /usr/include/asm-generic/errno.h \
- /usr/include/asm-generic/errno-base.h \
+ /usr/include/alloca.h /usr/include/bits/stdlib-float.h \
+ /usr/local/include/gsl/gsl_types.h /usr/local/include/gsl/gsl_errno.h \
+ /usr/include/errno.h /usr/include/bits/errno.h \
+ /usr/include/linux/errno.h /usr/include/asm/errno.h \
+ /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
  /usr/local/include/gsl/gsl_inline.h include/utilities_dw/dw_ascii.hpp \
  /usr/include/c++/4.8.3/vector \
  /usr/include/c++/4.8.3/bits/stl_construct.h \
@@ -310,8 +307,6 @@ regime_processes.o: time_series/regime_processes.cpp \
 
 /usr/include/bits/sys_errlist.h:
 
-/usr/include/bits/stdio.h:
-
 /usr/include/c++/4.8.3/x86_64-redhat-linux/bits/basic_file.h:
 
 /usr/include/c++/4.8.3/x86_64-redhat-linux/bits/c++io.h:
@@ -333,8 +328,6 @@ regime_processes.o: time_series/regime_processes.cpp \
 /usr/include/bits/mathdef.h:
 
 /usr/include/bits/mathcalls.h:
-
-/usr/include/bits/mathinline.h:
 
 include/utilities_dw/prcsn.h:
 
@@ -365,8 +358,6 @@ include/utilities_dw/dw_math.h:
 /usr/include/sys/sysmacros.h:
 
 /usr/include/alloca.h:
-
-/usr/include/bits/stdlib-bsearch.h:
 
 /usr/include/bits/stdlib-float.h:
 

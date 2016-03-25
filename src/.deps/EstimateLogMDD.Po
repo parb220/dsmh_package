@@ -78,8 +78,7 @@ EstimateLogMDD.o: dsmh_mpi/EstimateLogMDD.cpp /usr/include/stdc-predef.h \
  /usr/include/bits/waitstatus.h /usr/include/sys/types.h \
  /usr/include/sys/select.h /usr/include/bits/select.h \
  /usr/include/bits/sigset.h /usr/include/sys/sysmacros.h \
- /usr/include/alloca.h /usr/include/bits/stdlib-bsearch.h \
- /usr/include/bits/stdlib-float.h \
+ /usr/include/alloca.h /usr/include/bits/stdlib-float.h \
  /usr/include/c++/4.8.3/bits/algorithmfwd.h \
  /usr/include/c++/4.8.3/bits/stl_heap.h \
  /usr/include/c++/4.8.3/bits/stl_tempbuf.h \
@@ -92,9 +91,9 @@ EstimateLogMDD.o: dsmh_mpi/EstimateLogMDD.cpp /usr/include/stdc-predef.h \
  /usr/include/c++/4.8.3/bits/vector.tcc /usr/include/c++/4.8.3/ctime \
  /usr/include/c++/4.8.3/cstdio /usr/include/libio.h \
  /usr/include/_G_config.h /usr/include/bits/stdio_lim.h \
- /usr/include/bits/sys_errlist.h /usr/include/bits/stdio.h \
- include/dsmh_basic/CSampleIDWeight.hpp /usr/include/c++/4.8.3/iostream \
- /usr/include/c++/4.8.3/fstream /usr/include/c++/4.8.3/bits/codecvt.h \
+ /usr/include/bits/sys_errlist.h include/dsmh_basic/CSampleIDWeight.hpp \
+ /usr/include/c++/4.8.3/iostream /usr/include/c++/4.8.3/fstream \
+ /usr/include/c++/4.8.3/bits/codecvt.h \
  /usr/include/c++/4.8.3/x86_64-redhat-linux/bits/basic_file.h \
  /usr/include/c++/4.8.3/x86_64-redhat-linux/bits/c++io.h \
  /usr/include/c++/4.8.3/bits/fstream.tcc \
@@ -103,9 +102,8 @@ EstimateLogMDD.o: dsmh_mpi/EstimateLogMDD.cpp /usr/include/stdc-predef.h \
  /usr/include/bits/huge_val.h /usr/include/bits/huge_valf.h \
  /usr/include/bits/huge_vall.h /usr/include/bits/inf.h \
  /usr/include/bits/nan.h /usr/include/bits/mathdef.h \
- /usr/include/bits/mathcalls.h /usr/include/bits/mathinline.h \
- /usr/include/c++/4.8.3/cstring /usr/include/string.h \
- include/utilities_dw/dw_exception.hpp \
+ /usr/include/bits/mathcalls.h /usr/include/c++/4.8.3/cstring \
+ /usr/include/string.h include/utilities_dw/dw_exception.hpp \
  include/utilities_dw/dw_dense_matrix_inline.hpp \
  include/dsmh_basic/CEESParameter.hpp include/dsmh_basic/CStorageHead.hpp \
  include/dsmh_basic/CSampleIDWeight.hpp \
@@ -339,8 +337,6 @@ EstimateLogMDD.o: dsmh_mpi/EstimateLogMDD.cpp /usr/include/stdc-predef.h \
 
 /usr/include/alloca.h:
 
-/usr/include/bits/stdlib-bsearch.h:
-
 /usr/include/bits/stdlib-float.h:
 
 /usr/include/c++/4.8.3/bits/algorithmfwd.h:
@@ -377,8 +373,6 @@ include/dsmh_basic/CEquiEnergyModel.hpp:
 
 /usr/include/bits/sys_errlist.h:
 
-/usr/include/bits/stdio.h:
-
 include/dsmh_basic/CSampleIDWeight.hpp:
 
 /usr/include/c++/4.8.3/iostream:
@@ -414,8 +408,6 @@ include/utilities_dw/dw_dense_matrix.hpp:
 /usr/include/bits/mathdef.h:
 
 /usr/include/bits/mathcalls.h:
-
-/usr/include/bits/mathinline.h:
 
 /usr/include/c++/4.8.3/cstring:
 

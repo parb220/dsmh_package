@@ -10,7 +10,7 @@ AC_CONFIG_FILES([data/Makefile])
 
 # check for C++ preprocessor and compiler
 #AC_PROG_CXXCPP
-AC_PROG_CXX
+#AC_PROG_CXX
 AC_PROG_CC
 
 # C++11 standard
@@ -20,7 +20,8 @@ AC_PROG_CC
 AM_INIT_AUTOMAKE([1.9])
 
 # use the C++ compiler for the following checks
-AC_LANG([C++])
+#AC_LANG([C++])
+AC_LANG([C])
 
 # Checks for header files.
 #AC_HEADER_STDC
@@ -29,9 +30,6 @@ AC_LANG([C++])
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_SIZE_T
 
-# blas lapack
-sinclude(m4_ax_lapack.m4)
-AX_LAPACK([LIBS="$LAPACK_LIBS $BLAS_LIBS $FCLIBS"],[AC_MSG_ERROR([blas/lapack requested but not found.])])
 
 # mpi
 sinclude(m4_ax_prog_cxx_mpi.m4)
@@ -41,6 +39,10 @@ AX_PROG_CXX_MPI([with_mpi=yes],[],[AC_MSG_ERROR([mpi compiler requested but not 
 AC_CHECK_LIB([m],[cos])
 AC_CHECK_LIB([gslcblas],[cblas_dgemm])
 AC_CHECK_LIB([gsl],[gsl_blas_dgemm])
+
+# blas lapack
+sinclude(m4_ax_lapack.m4)
+AX_LAPACK([LIBS="$LAPACK_LIBS $BLAS_LIBS $FCLIBS"],[AC_MSG_ERROR([blas/lapack requested but not found.])])
 
 
 # distribute additional compiler and linker flags among Makefiles
